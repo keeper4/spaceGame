@@ -304,6 +304,7 @@
 				DE70D9181C99DD690087BB5C /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
