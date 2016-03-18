@@ -17,6 +17,9 @@
 @property (assign,nonatomic) CGFloat widthShip;
 @property (assign,nonatomic) CGFloat heigthShip;
 
+/////
+
+
 @end
 
 @implementation ViewController
