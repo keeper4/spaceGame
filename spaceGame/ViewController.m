@@ -13,12 +13,9 @@
 @property (weak,nonatomic) UIView *leftBlock;
 @property (weak,nonatomic) UIView *rightBlock;
 @property (weak,nonatomic) UIView *spaceShipBlock;
-@property (nonatomic,strong) UILongPressGestureRecognizer *lpgr;
+//@property (nonatomic,strong) UILongPressGestureRecognizer *lpgr;
 @property (assign,nonatomic) CGFloat widthShip;
 @property (assign,nonatomic) CGFloat heigthShip;
-
-/////
-
 
 @end
 
@@ -78,7 +75,7 @@
 */
 }
 
-#pragma mark - Method
+#pragma mark - Methods
 /*
 - (void)handleLongPressGestures:(UILongPressGestureRecognizer *)sender
 {
