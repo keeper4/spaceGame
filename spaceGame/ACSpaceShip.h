@@ -7,10 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "UIKit/UIKit.h"
 
-@interface ACSpaceShip : NSObject
+@interface ACSpaceShip : UIImageView
 
-
-
-- (void) moveShip;
 @end

@@ -8,10 +8,42 @@
 
 #import "ACSpaceShip.h"
 
+@interface ACSpaceShip()
+
+@property (assign,nonatomic) CGFloat widthShip;
+@property (assign,nonatomic) CGFloat heigthShip;
+
+@end
+
 @implementation ACSpaceShip
 
-
-- (void) moveShip {
-
+- (instancetype)init
+{
+    self = [super init];
+    if (self) {
+        
+        self.widthShip = 80;
+        self.heigthShip = 80;
+        [self makeShip];
+    }
+    return self;
 }
+
+- (void) makeShip {
+    
+    CGRect screen = [[UIScreen mainScreen] bounds];
+    
+    self.frame = CGRectMake(CGRectGetMidX(screen)-self.widthShip/2,
+                            CGRectGetMaxY(screen)-self.widthShip,
+                            self.widthShip,
+                            self.heigthShip);
+    
+    self.backgroundColor = [UIColor clearColor];
+    
+    self.layer.zPosition = 1;
+    
+    self.image = [UIImage imageNamed:@"spaceShip.png"];
+ 
+}
+
 @end
