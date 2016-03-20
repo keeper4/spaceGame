@@ -7,6 +7,7 @@
 //
 
 #import "ACSpaceShip.h"
+#import "ACRocket.h"
 
 @interface ACSpaceShip()
 
@@ -43,7 +44,16 @@
     self.layer.zPosition = 1;
     
     self.image = [UIImage imageNamed:@"spaceShip.png"];
- 
+  
+}
+
+- (void)makeShootOnView:(UIView *)mainView {
+
+    ACRocket *rocket = [[ACRocket alloc]init];
+    
+    [rocket createRocketShipMidX:CGRectGetMidX(self.frame) shipMinY:CGRectGetMinY(self.frame)];
+    
+    [mainView addSubview:rocket];
 }
 
 @end

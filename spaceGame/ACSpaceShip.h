@@ -11,4 +11,8 @@
 
 @interface ACSpaceShip : UIImageView
 
+@property (weak,nonatomic) UIView *rocket;
+
+- (void)makeShootOnView:(UIView *)mainView;
+
 @end

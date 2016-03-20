@@ -8,26 +8,46 @@
 
 #import "ViewController.h"
 #import "ACSpaceShip.h"
+#import "ACRocket.h"
 
 @interface ViewController ()
 
-@property (weak,nonatomic) UIImageView *spaceShipBlock;
+@property (strong,nonatomic) ACSpaceShip *spaceShipBlock;
 
 @end
 
 @implementation ViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
     
-//spaceShip Create
     
-    ACSpaceShip *spaceShip = [[ACSpaceShip alloc]init];
-
-    [self.view addSubview:spaceShip];
+    //spaceShip Create
     
-    self.spaceShipBlock = spaceShip;
+    self.spaceShipBlock = [[ACSpaceShip alloc]init];
+    
+    [self.view addSubview:self.spaceShipBlock];
+    
+ 
 }
+
+- (void)viewDidAppear:(BOOL)animated {
+    
+    [super viewDidAppear:animated];
+    
+  //  NSThread *one = [[NSThread alloc] initWithTarget:self selector:@selector(makeShoot) object:nil];
+ //   [one start];
+    
+    
+    
+}
+#pragma mark - Methods
+
+- (void)makeShoot {
+    
+    [self.spaceShipBlock makeShootOnView:self.view];
+    
+}
+
 
 #pragma mark - Touch
 
@@ -39,7 +59,7 @@
     UITouch *touch = [touches anyObject];
     
     CGPoint pointTouch = [touch locationInView:self.view];
-
+    
     if (pointTouch.x <= CGRectGetMidX(self.view.frame) &&
         CGRectGetMinX(self.view.frame) <= CGRectGetMinX(self.spaceShipBlock.frame)-delta) {
         

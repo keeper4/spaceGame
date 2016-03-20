@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE2B3B221C9DD27900EE1D36 /* ACRocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DE2B3B211C9DD27900EE1D36 /* ACRocket.m */; };
 		DE70D9041C99DD690087BB5C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70D9031C99DD690087BB5C /* main.m */; };
 		DE70D9071C99DD690087BB5C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70D9061C99DD690087BB5C /* AppDelegate.m */; };
 		DE70D90A1C99DD690087BB5C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70D9091C99DD690087BB5C /* ViewController.m */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DE2B3B201C9DD27900EE1D36 /* ACRocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRocket.h; sourceTree = "<group>"; };
+		DE2B3B211C9DD27900EE1D36 /* ACRocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACRocket.m; sourceTree = "<group>"; };
 		DE70D8FF1C99DD690087BB5C /* spaceGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spaceGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE70D9031C99DD690087BB5C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DE70D9051C99DD690087BB5C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -63,6 +66,8 @@
 			children = (
 				DE70D9191C99DDD60087BB5C /* ACSpaceShip.h */,
 				DE70D91A1C99DDD60087BB5C /* ACSpaceShip.m */,
+				DE2B3B201C9DD27900EE1D36 /* ACRocket.h */,
+				DE2B3B211C9DD27900EE1D36 /* ACRocket.m */,
 				DE70D9051C99DD690087BB5C /* AppDelegate.h */,
 				DE70D9061C99DD690087BB5C /* AppDelegate.m */,
 				DE70D9081C99DD690087BB5C /* ViewController.h */,
@@ -154,6 +159,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE2B3B221C9DD27900EE1D36 /* ACRocket.m in Sources */,
 				DE70D91B1C99DDD60087BB5C /* ACSpaceShip.m in Sources */,
 				DE70D90A1C99DD690087BB5C /* ViewController.m in Sources */,
 				DE70D9071C99DD690087BB5C /* AppDelegate.m in Sources */,
