@@ -19,9 +19,8 @@
 @implementation ViewController
 
 - (void)viewDidLoad {
-    [super viewDidLoad];
     
-    //spaceShip Create
+<<<<<<< HEAD
     
     //spaceShip Create
     
@@ -34,11 +33,6 @@
 
 - (void)viewDidAppear:(BOOL)animated {
     
-    self.spaceShipBlock = spaceShip;
-    
-    
-    [self setupBackgroundImageViews];
-    
     [super viewDidAppear:animated];
     
   //  NSThread *one = [[NSThread alloc] initWithTarget:self selector:@selector(makeShoot) object:nil];
@@ -46,15 +40,19 @@
     
     
     
-}
-#pragma mark - Methods
-
-- (void)makeShoot {
+=======
+    //spaceShip Create
     
-    [self.spaceShipBlock makeShootOnView:self.view];
+    ACSpaceShip *spaceShip = [[ACSpaceShip alloc]init];
+    
+    [self.view addSubview:spaceShip];
+    
+    self.spaceShipBlock = spaceShip;
+    
+    
+    [self setupBackgroundImageViews];
     
 }
-
 
 #pragma mark - Setup Animation Background
 
@@ -103,7 +101,16 @@
                          
                      } completion:nil];
     
+>>>>>>> 91c3983ba4bf10869d6cb992bf6f99aec308673e
 }
+#pragma mark - Methods
+
+- (void)makeShoot {
+    
+    [self.spaceShipBlock makeShootOnView:self.view];
+    
+}
+
 
 #pragma mark - Touch
 

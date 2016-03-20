@@ -8,11 +8,10 @@
 
 #import "ViewController.h"
 #import "ACSpaceShip.h"
-#import "ACRocket.h"
 
 @interface ViewController ()
 
-@property (strong,nonatomic) ACSpaceShip *spaceShipBlock;
+@property (weak,nonatomic) UIImageView *spaceShipBlock;
 
 @end
 
@@ -23,38 +22,16 @@
     
     //spaceShip Create
     
-    //spaceShip Create
+    ACSpaceShip *spaceShip = [[ACSpaceShip alloc]init];
     
-    self.spaceShipBlock = [[ACSpaceShip alloc]init];
-    
-    [self.view addSubview:self.spaceShipBlock];
-    
- 
-}
-
-- (void)viewDidAppear:(BOOL)animated {
+    [self.view addSubview:spaceShip];
     
     self.spaceShipBlock = spaceShip;
     
     
     [self setupBackgroundImageViews];
     
-    [super viewDidAppear:animated];
-    
-  //  NSThread *one = [[NSThread alloc] initWithTarget:self selector:@selector(makeShoot) object:nil];
- //   [one start];
-    
-    
-    
 }
-#pragma mark - Methods
-
-- (void)makeShoot {
-    
-    [self.spaceShipBlock makeShootOnView:self.view];
-    
-}
-
 
 #pragma mark - Setup Animation Background
 
