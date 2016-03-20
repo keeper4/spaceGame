@@ -23,8 +23,6 @@
     
     //spaceShip Create
     
-    //spaceShip Create
-    
     self.spaceShipBlock = [[ACSpaceShip alloc]init];
     
     [self.view addSubview:self.spaceShipBlock];
@@ -33,19 +31,13 @@
 }
 
 - (void)viewDidAppear:(BOOL)animated {
-    
-    self.spaceShipBlock = spaceShip;
-    
+    [super viewDidAppear:animated];
     
     [self setupBackgroundImageViews];
     
     [super viewDidAppear:animated];
     
-  //  NSThread *one = [[NSThread alloc] initWithTarget:self selector:@selector(makeShoot) object:nil];
- //   [one start];
-    
-    
-    
+   
 }
 #pragma mark - Methods
 
