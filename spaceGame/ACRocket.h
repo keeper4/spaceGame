@@ -15,4 +15,6 @@
 
 - (void)createRocketShipMidX:(CGFloat)shipMidX shipMinY:(CGFloat)shipMinY;
 
+- (void)createRocketFromShip:(UIView *)ship withDuration:(NSTimeInterval)duration;
+
 @end

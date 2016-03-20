@@ -18,6 +18,7 @@
 
 @implementation ViewController
 
+
 - (void)viewDidLoad {
     [super viewDidLoad];
     
@@ -35,17 +36,9 @@
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    
-}
-
-#pragma mark - Methods
-
-- (void)makeShoot {
-    
     [self.spaceShipBlock makeShootOnView:self.view];
     
 }
-
 
 #pragma mark - Setup Animation Background
 
@@ -94,6 +87,13 @@
                          
                      } completion:nil];
     
+}
+
+#pragma mark - Hide StatusBar
+
+- (BOOL)prefersStatusBarHidden {
+    
+    return YES;
 }
 
 #pragma mark - Touch

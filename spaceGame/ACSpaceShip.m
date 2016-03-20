@@ -51,7 +51,7 @@
 
     ACRocket *rocket = [[ACRocket alloc]init];
     
-    [rocket createRocketShipMidX:CGRectGetMidX(self.frame) shipMinY:CGRectGetMinY(self.frame)];
+    [rocket createRocketFromShip:self withDuration:2];
     
     [mainView addSubview:rocket];
 }
