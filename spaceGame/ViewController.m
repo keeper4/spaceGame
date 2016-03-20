@@ -27,18 +27,17 @@
     
     [self.view addSubview:self.spaceShipBlock];
     
- 
+    
+    [self setupBackgroundImageViews];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self setupBackgroundImageViews];
     
-    [super viewDidAppear:animated];
-    
-   
 }
+
 #pragma mark - Methods
 
 - (void)makeShoot {
@@ -57,10 +56,7 @@
     
     CGRect viewRect = self.view.frame;
     
-    backgroundViewFirst.frame = CGRectMake(CGRectGetMinX(viewRect),
-                                           CGRectGetMinX(viewRect),
-                                           CGRectGetWidth(viewRect),
-                                           CGRectGetHeight(viewRect));
+    backgroundViewFirst.frame = viewRect;
     
     UIImageView *backgroundViewSecond = [[UIImageView alloc] initWithImage:backgroundImage];
     
@@ -87,11 +83,14 @@
                      animations:^{
                          
                          firstView.frame = CGRectMake(CGRectGetMinX(firstView.frame),
-                                                                CGRectGetMaxY(firstView.frame),
-                                                                CGRectGetWidth(firstView.frame),
-                                                                CGRectGetHeight(firstView.frame));
+                                                      CGRectGetMaxY(firstView.frame),
+                                                      CGRectGetWidth(firstView.frame),
+                                                      CGRectGetHeight(firstView.frame));
                          
-                         secondView.frame = firstView.frame;
+                         secondView.frame = CGRectMake(CGRectGetMinX(secondView.frame),
+                                                       CGRectGetMaxY(secondView.frame),
+                                                       CGRectGetWidth(secondView.frame),
+                                                       CGRectGetHeight(secondView.frame));
                          
                      } completion:nil];
     
