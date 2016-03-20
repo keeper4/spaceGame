@@ -8,11 +8,12 @@
 
 #import "ViewController.h"
 #import "ACSpaceShip.h"
-#import "ACRocket.h"
+#import "ACEnemy.h"
+
 
 @interface ViewController ()
 
-@property (strong,nonatomic) ACSpaceShip *spaceShipBlock;
+@property (strong,nonatomic) ACSpaceShip *spaceShip;
 
 @end
 
@@ -22,21 +23,25 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    [self setupBackgroundImageViews];
+    
     //spaceShip Create
     
-    self.spaceShipBlock = [[ACSpaceShip alloc]init];
+    self.spaceShip = [[ACSpaceShip alloc]init];
     
-    [self.view addSubview:self.spaceShipBlock];
+    [self.view addSubview:self.spaceShip];
     
+    ACEnemy *enemy = [[ACEnemy alloc]init];
     
-    [self setupBackgroundImageViews];
+    [self.view addSubview:enemy];
+    
     
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
     
-    [self.spaceShipBlock makeShootOnView:self.view];
+    [self.spaceShip makeShootOnView:self.view];
     
 }
 
@@ -101,14 +106,14 @@
 - (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
     
     CGFloat delta = 20.f;
-    CGFloat oldX = CGRectGetMidX(self.spaceShipBlock.frame);
+    CGFloat oldX = CGRectGetMidX(self.spaceShip.frame);
     
     UITouch *touch = [touches anyObject];
     
     CGPoint pointTouch = [touch locationInView:self.view];
     
     if (pointTouch.x <= CGRectGetMidX(self.view.frame) &&
-        CGRectGetMinX(self.view.frame) <= CGRectGetMinX(self.spaceShipBlock.frame)-delta) {
+        CGRectGetMinX(self.view.frame) <= CGRectGetMinX(self.spaceShip.frame)-delta) {
         
         CGFloat newX = oldX-delta;
         
@@ -116,13 +121,13 @@
                               delay:0
                             options:UIViewAnimationOptionCurveLinear
                          animations:^{
-                             self.spaceShipBlock.center = CGPointMake(newX, CGRectGetMaxY(self.view.frame)-self.spaceShipBlock.frame.size.width/2);
+                             self.spaceShip.center = CGPointMake(newX, CGRectGetMaxY(self.view.frame)-self.spaceShip.frame.size.width/2);
                          }
                          completion:^(BOOL finished) {
                          }];
         
     } else  if(pointTouch.x > CGRectGetMidX(self.view.frame) &&
-               CGRectGetMaxX(self.view.frame) >= CGRectGetMaxX(self.spaceShipBlock.frame)+delta) {
+               CGRectGetMaxX(self.view.frame) >= CGRectGetMaxX(self.spaceShip.frame)+delta) {
         
         CGFloat newX = oldX+delta;
         
@@ -130,7 +135,7 @@
                               delay:0
                             options:UIViewAnimationOptionCurveLinear
                          animations:^{
-                             self.spaceShipBlock.center = CGPointMake(newX, CGRectGetMaxY(self.view.frame)-self.spaceShipBlock.frame.size.width/2);
+                             self.spaceShip.center = CGPointMake(newX, CGRectGetMaxY(self.view.frame)-self.spaceShip.frame.size.width/2);
                          }
                          completion:^(BOOL finished) {
                          }];

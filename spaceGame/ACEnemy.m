@@ -1,26 +1,25 @@
 //
-//  ACSpaceShip.m
+//  ACEnemy.m
 //  spaceGame
 //
-//  Created by Oleksandr Chyzh on 16/3/16.
+//  Created by Oleksandr Chyzh on 20/3/16.
 //  Copyright © 2016 Aleksandr Chyzh. All rights reserved.
 //
 
-#import "ACSpaceShip.h"
+#import "ACEnemy.h"
 
-@interface ACSpaceShip()
 
+@interface ACEnemy()
 
 @end
 
-@implementation ACSpaceShip
+@implementation ACEnemy
 
 - (instancetype)init
 {
     self = [super init];
     if (self) {
-        
-        
+
         [self makeShip];
     }
     return self;
@@ -28,13 +27,13 @@
 
 - (void) makeShip {
     
-    CGFloat widthShip = 80;
-    CGFloat heigthShip = 80;
+   CGFloat widthShip = 50;
+   CGFloat heigthShip = 70;
     
     CGRect screen = [[UIScreen mainScreen] bounds];
     
-    self.frame = CGRectMake(CGRectGetMidX(screen) - widthShip/2,
-                            CGRectGetMaxY(screen) - widthShip,
+    self.frame = CGRectMake(CGRectGetMidX(screen)-widthShip/2,
+                            CGRectGetMinY(screen),
                             widthShip,
                             heigthShip);
     
@@ -42,7 +41,7 @@
     
     self.layer.zPosition = 1;
     
-    self.image = [UIImage imageNamed:@"spaceShip.png"];
+    self.image = [UIImage imageNamed:@"enemy"];
     
 }
 

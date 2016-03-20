@@ -6,13 +6,11 @@
 //  Copyright © 2016 Aleksandr Chyzh. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "UIKit/UIKit.h"
+#import "ACSpaceObject.h"
 
-@interface ACSpaceShip : UIImageView
+@interface ACSpaceShip : ACSpaceObject
 
-@property (weak,nonatomic) UIView *rocket;
 
-- (void)makeShootOnView:(UIView *)mainView;
 
 @end
