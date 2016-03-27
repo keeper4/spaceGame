@@ -12,6 +12,8 @@
 extern NSString * const shipRocketFinishedFlyNotification;
 extern NSString * const enemyRocketFinishedFlyNotification;
 
+extern NSString * const rocketCurrentPositionNotification;
+
 
 @interface ACRocket : UIImageView
 
@@ -19,6 +21,7 @@ extern NSString * const enemyRocketFinishedFlyNotification;
 @property (assign, nonatomic) CGFloat width;
 
 - (instancetype)initWithShipView:(UIView *)shipView;
+- (instancetype)initWithEnemyView:(UIView *)enemyView;
 
 - (void)createRocketFromMidX:(CGFloat)midX minY:(CGFloat)minY withDuration:(NSTimeInterval)duration;
 

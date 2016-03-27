@@ -44,15 +44,7 @@
     
     self.image = [UIImage imageNamed:@"spaceShip.png"];
     
-}
-
-- (void)makeShootOnView:(UIView *)mainView {
-    
-    ACRocket *rocket = [[ACRocket alloc] initWithShipView:self];
-    
-    [rocket createRocketFromMidX:CGRectGetMidX(self.frame) minY:CGRectGetMinY(self.frame) withDuration:0.1];
-    
-    [mainView addSubview:rocket];
+    self.lifeQuantity = 3;
 }
 
 @end

@@ -11,9 +11,9 @@
 
 @implementation ACSpaceObject
 
-- (void)makeShootOnView:(UIView *)mainView {
-
-}
+//- (void)makeShootOnView:(UIView *)mainView {
+//
+//}
 
 
 @end

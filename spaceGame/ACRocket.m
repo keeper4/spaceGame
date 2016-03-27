@@ -11,6 +11,8 @@
 NSString * const shipRocketFinishedFlyNotification = @"shipRocketFinishedFlyNotification";
 NSString * const enemyRocketFinishedFlyNotification = @"enemyRocketFinishedFlyNotification";
 
+NSString * const rocketCurrentPositionNotification = @"rocketCurrentPositionNotification";
+
 @implementation ACRocket
 
 static NSUInteger flyStep = 10;
@@ -26,7 +28,23 @@ static NSUInteger flyStep = 10;
         self.height = 30;
         self.width = 20;
         
-        self.frame = CGRectMake(CGRectGetMidX(shipView.frame) - self.width/2, CGRectGetMidY(shipView.frame), self.width, self.height);
+        self.frame = CGRectMake(CGRectGetMidX(shipView.frame) - self.width/2, CGRectGetMinY(shipView.frame), self.width, self.height);
+        
+        self.backgroundColor = [UIColor redColor];
+        
+    }
+    return self;
+}
+
+- (instancetype)initWithEnemyView:(UIView *)enemyView
+{
+    self = [super init];
+    if (self) {
+        
+        self.height = 30;
+        self.width = 20;
+        
+        self.frame = CGRectMake(CGRectGetMidX(enemyView.frame) - self.width/2, CGRectGetMaxY(enemyView.frame), self.width, self.height);
         
         self.backgroundColor = [UIColor redColor];
         
@@ -47,16 +65,17 @@ static NSUInteger flyStep = 10;
                                   
                               } completion:^(BOOL finished) {
                                   
+                                  NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+                                  
                                   if (CGRectGetMaxY(self.frame) > 0) {
+                                      
+                                      [center postNotificationName:rocketCurrentPositionNotification object:self];
                                       
                                       [self createRocketFromMidX:midX minY:CGRectGetMinY(self.frame) withDuration:duration];
                                       
                                   } else {
                                       
-                                      NSNotification *shipNotification = [NSNotification notificationWithName:shipRocketFinishedFlyNotification object:nil];
-                                      
-                                      [[NSNotificationCenter defaultCenter] postNotification:shipNotification];
-                                      
+                                      [center postNotificationName:shipRocketFinishedFlyNotification object:nil];
                                   }
                                   
                               }];
@@ -78,18 +97,18 @@ static NSUInteger flyStep = 10;
                                   
                               } completion:^(BOOL finished) {
                                   
+                                  NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+                                  
                                   if (CGRectGetMinY(self.frame) <= screenHeight) {
+                                      
+                                      [center postNotificationName:rocketCurrentPositionNotification object:self];
                                       
                                       [self createRocketFromMidX:midX maxY:CGRectGetMaxY(self.frame) withDuration:duration];
                                       
                                   } else {
-                                      
-                                      NSNotification *enemyNotification = [NSNotification notificationWithName:enemyRocketFinishedFlyNotification object:nil];
-                                      
-                                      [[NSNotificationCenter defaultCenter] postNotification:enemyNotification];
-                                      
+
+                                      [center postNotificationName:enemyRocketFinishedFlyNotification object:nil];
                                   }
-                                  
                                   
                               }];
         

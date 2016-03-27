@@ -11,8 +11,10 @@
 
 @interface ACSpaceObject : UIImageView
 
-@property (weak,nonatomic) UIView *rocket;
+@property (assign, nonatomic) NSUInteger lifeQuantity;
 
-- (void)makeShootOnView:(UIView *)mainView;
+//@property (weak,nonatomic) UIView *rocket;
+
+//- (void)makeShootOnView:(UIView *)mainView;
 
 @end

@@ -12,7 +12,7 @@
 		DE2C183B1C9F3278002B9427 /* ACSpaceObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DE2C183A1C9F3278002B9427 /* ACSpaceObject.m */; };
 		DE70D9041C99DD690087BB5C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70D9031C99DD690087BB5C /* main.m */; };
 		DE70D9071C99DD690087BB5C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70D9061C99DD690087BB5C /* AppDelegate.m */; };
-		DE70D90A1C99DD690087BB5C /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70D9091C99DD690087BB5C /* ViewController.m */; };
+		DE70D90A1C99DD690087BB5C /* SceneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70D9091C99DD690087BB5C /* SceneViewController.m */; };
 		DE70D90D1C99DD690087BB5C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE70D90B1C99DD690087BB5C /* Main.storyboard */; };
 		DE70D90F1C99DD690087BB5C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE70D90E1C99DD690087BB5C /* Assets.xcassets */; };
 		DE70D9121C99DD690087BB5C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE70D9101C99DD690087BB5C /* LaunchScreen.storyboard */; };
@@ -30,8 +30,8 @@
 		DE70D9031C99DD690087BB5C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DE70D9051C99DD690087BB5C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DE70D9061C99DD690087BB5C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		DE70D9081C99DD690087BB5C /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
-		DE70D9091C99DD690087BB5C /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		DE70D9081C99DD690087BB5C /* SceneViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneViewController.h; sourceTree = "<group>"; };
+		DE70D9091C99DD690087BB5C /* SceneViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneViewController.m; sourceTree = "<group>"; };
 		DE70D90C1C99DD690087BB5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DE70D90E1C99DD690087BB5C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE70D9111C99DD690087BB5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -51,6 +51,21 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BA0E7BD71CA85D9F00FF1210 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				DE2C18391C9F3278002B9427 /* ACSpaceObject.h */,
+				DE2C183A1C9F3278002B9427 /* ACSpaceObject.m */,
+				DE70D9191C99DDD60087BB5C /* ACSpaceShip.h */,
+				DE70D91A1C99DDD60087BB5C /* ACSpaceShip.m */,
+				DE2C18361C9F1F90002B9427 /* ACEnemy.h */,
+				DE2C18371C9F1F90002B9427 /* ACEnemy.m */,
+				DE2B3B201C9DD27900EE1D36 /* ACRocket.h */,
+				DE2B3B211C9DD27900EE1D36 /* ACRocket.m */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		DE70D8F61C99DD690087BB5C = {
 			isa = PBXGroup;
 			children = (
@@ -70,18 +85,11 @@
 		DE70D9011C99DD690087BB5C /* spaceGame */ = {
 			isa = PBXGroup;
 			children = (
-				DE2C18391C9F3278002B9427 /* ACSpaceObject.h */,
-				DE2C183A1C9F3278002B9427 /* ACSpaceObject.m */,
-				DE70D9191C99DDD60087BB5C /* ACSpaceShip.h */,
-				DE70D91A1C99DDD60087BB5C /* ACSpaceShip.m */,
-				DE2B3B201C9DD27900EE1D36 /* ACRocket.h */,
-				DE2B3B211C9DD27900EE1D36 /* ACRocket.m */,
-				DE2C18361C9F1F90002B9427 /* ACEnemy.h */,
-				DE2C18371C9F1F90002B9427 /* ACEnemy.m */,
 				DE70D9051C99DD690087BB5C /* AppDelegate.h */,
 				DE70D9061C99DD690087BB5C /* AppDelegate.m */,
-				DE70D9081C99DD690087BB5C /* ViewController.h */,
-				DE70D9091C99DD690087BB5C /* ViewController.m */,
+				BA0E7BD71CA85D9F00FF1210 /* Models */,
+				DE70D9081C99DD690087BB5C /* SceneViewController.h */,
+				DE70D9091C99DD690087BB5C /* SceneViewController.m */,
 				DE70D90B1C99DD690087BB5C /* Main.storyboard */,
 				DE70D90E1C99DD690087BB5C /* Assets.xcassets */,
 				DE70D9101C99DD690087BB5C /* LaunchScreen.storyboard */,
@@ -171,7 +179,7 @@
 			files = (
 				DE2B3B221C9DD27900EE1D36 /* ACRocket.m in Sources */,
 				DE70D91B1C99DDD60087BB5C /* ACSpaceShip.m in Sources */,
-				DE70D90A1C99DD690087BB5C /* ViewController.m in Sources */,
+				DE70D90A1C99DD690087BB5C /* SceneViewController.m in Sources */,
 				DE70D9071C99DD690087BB5C /* AppDelegate.m in Sources */,
 				DE2C18381C9F1F90002B9427 /* ACEnemy.m in Sources */,
 				DE2C183B1C9F3278002B9427 /* ACSpaceObject.m in Sources */,
