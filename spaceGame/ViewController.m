@@ -13,7 +13,8 @@
 
 @interface ViewController ()
 
-@property (strong,nonatomic) ACSpaceShip *spaceShip;
+@property (strong, nonatomic) ACSpaceShip *spaceShip;
+@property (strong, nonatomic) ACEnemy *enemyShip;
 
 @end
 
@@ -31,10 +32,11 @@
     
     [self.view addSubview:self.spaceShip];
     
-    ACEnemy *enemy = [[ACEnemy alloc]init];
+    //enemyShip Create
     
-    [self.view addSubview:enemy];
+    self.enemyShip = [[ACEnemy alloc]init];
     
+    [self.view addSubview:self.enemyShip];
     
 }
 
@@ -42,6 +44,8 @@
     [super viewDidAppear:animated];
     
     [self.spaceShip makeShootOnView:self.view];
+    
+    [self.enemyShip makeShootOnView:self.view];
     
 }
 

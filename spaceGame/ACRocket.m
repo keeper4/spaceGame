@@ -10,29 +10,84 @@
 
 @implementation ACRocket
 
-- (void)createRocketFromShip:(UIView *)ship withDuration:(NSTimeInterval)duration {
+static NSUInteger flyStep = 10;
+
+#define screenHeight  ([[UIScreen mainScreen] bounds].size.height)
+
+
+- (instancetype)initWithShipView:(UIView *)shipView
+{
+    self = [super init];
+    if (self) {
+        
+        self.height = 30;
+        self.width = 20;
+        
+        self.frame = CGRectMake(CGRectGetMidX(shipView.frame), CGRectGetMinY(shipView.frame) - self.height, self.width, self.height);
+        
+        self.backgroundColor = [UIColor redColor];
+        
+    }
+    return self;
+}
+
+- (void)createRocketFromMidX:(CGFloat)midX minY:(CGFloat)minY withDuration:(NSTimeInterval)duration {
     
-    CGFloat rocketWidth = 20;
-    CGFloat rocketHeight = 30;
-    
-    self.frame = CGRectMake(CGRectGetMidX(ship.frame)-rocketWidth/2, CGRectGetMinY(ship.frame)-rocketHeight, rocketWidth, rocketHeight);
-    
-    self.backgroundColor = [UIColor redColor];
-    
-    
-    [UIImageView animateWithDuration:duration
-                               delay:0
-                             options:UIViewAnimationOptionCurveLinear
-                          animations:^{
-                              
-                              self.center = CGPointMake(CGRectGetMidX(ship.frame), - rocketHeight);
-                              
-                          } completion:^(BOOL finished) {
-                              
-                              [self createRocketFromShip:ship withDuration:duration];
-                              
-                          }];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [UIImageView animateWithDuration:duration
+                                   delay:0
+                                 options:UIViewAnimationOptionCurveLinear
+                              animations:^{
+                                  
+                                  self.center = CGPointMake(midX, minY - flyStep);
+                                  
+                              } completion:^(BOOL finished) {
+                                  
+                                  if (CGRectGetMaxY(self.frame) > 0) {
+                                      
+                                      [self createRocketFromMidX:midX minY:CGRectGetMinY(self.frame) withDuration:duration];
+                                      
+                                  } else {
+                                      
+                                      
+                                  }
+                                  
+                                  
+                              }];
+        
+    });
     
 }
+
+- (void)createRocketFromMidX:(CGFloat)midX maxY:(CGFloat)maxY withDuration:(NSTimeInterval)duration {
+    
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+        [UIImageView animateWithDuration:duration
+                                   delay:0
+                                 options:UIViewAnimationOptionCurveLinear
+                              animations:^{
+                                  
+                                  self.center = CGPointMake(midX, maxY + flyStep);
+                                  
+                              } completion:^(BOOL finished) {
+                                  
+                                  if (CGRectGetMinY(self.frame) < screenHeight ) {
+                                      
+                                      [self createRocketFromMidX:midX maxY:CGRectGetMaxY(self.frame) withDuration:duration];
+                                      
+                                  } else {
+                                      
+                                      
+                                  }
+                                  
+                                  
+                              }];
+        
+    });
+    
+}
+
 
 @end

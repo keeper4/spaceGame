@@ -11,8 +11,13 @@
 
 @interface ACRocket : UIImageView
 
-@property (weak,nonatomic) UIImageView *rocketView;
+@property (assign, nonatomic) CGFloat height;
+@property (assign, nonatomic) CGFloat width;
 
-- (void)createRocketFromShip:(UIView *)ship withDuration:(NSTimeInterval)duration;
+- (instancetype)initWithShipView:(UIView *)shipView;
+
+- (void)createRocketFromMidX:(CGFloat)midX minY:(CGFloat)minY withDuration:(NSTimeInterval)duration;
+
+- (void)createRocketFromMidX:(CGFloat)midX maxY:(CGFloat)maxY withDuration:(NSTimeInterval)duration;
 
 @end

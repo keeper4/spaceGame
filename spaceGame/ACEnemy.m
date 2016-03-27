@@ -47,9 +47,9 @@
 
 - (void)makeShootOnView:(UIView *)mainView {
     
-    ACRocket *rocket = [[ACRocket alloc]init];
+    ACRocket *rocket = [[ACRocket alloc] initWithShipView:self];
     
-    [rocket createRocketFromShip:self withDuration:2];
+    [rocket createRocketFromMidX:CGRectGetMidX(self.frame) maxY:CGRectGetMaxY(self.frame) withDuration:0.1];
     
     [mainView addSubview:rocket];
 }
