@@ -8,6 +8,9 @@
 
 #import "ACRocket.h"
 
+NSString * const shipRocketFinishedFlyNotification = @"shipRocketFinishedFlyNotification";
+NSString * const enemyRocketFinishedFlyNotification = @"enemyRocketFinishedFlyNotification";
+
 @implementation ACRocket
 
 static NSUInteger flyStep = 10;
@@ -23,7 +26,7 @@ static NSUInteger flyStep = 10;
         self.height = 30;
         self.width = 20;
         
-        self.frame = CGRectMake(CGRectGetMidX(shipView.frame), CGRectGetMinY(shipView.frame) - self.height, self.width, self.height);
+        self.frame = CGRectMake(CGRectGetMidX(shipView.frame) - self.width/2, CGRectGetMidY(shipView.frame), self.width, self.height);
         
         self.backgroundColor = [UIColor redColor];
         
@@ -50,9 +53,11 @@ static NSUInteger flyStep = 10;
                                       
                                   } else {
                                       
+                                      NSNotification *shipNotification = [NSNotification notificationWithName:shipRocketFinishedFlyNotification object:nil];
+                                      
+                                      [[NSNotificationCenter defaultCenter] postNotification:shipNotification];
                                       
                                   }
-                                  
                                   
                               }];
         
@@ -73,12 +78,15 @@ static NSUInteger flyStep = 10;
                                   
                               } completion:^(BOOL finished) {
                                   
-                                  if (CGRectGetMinY(self.frame) < screenHeight ) {
+                                  if (CGRectGetMinY(self.frame) <= screenHeight) {
                                       
                                       [self createRocketFromMidX:midX maxY:CGRectGetMaxY(self.frame) withDuration:duration];
                                       
                                   } else {
                                       
+                                      NSNotification *enemyNotification = [NSNotification notificationWithName:enemyRocketFinishedFlyNotification object:nil];
+                                      
+                                      [[NSNotificationCenter defaultCenter] postNotification:enemyNotification];
                                       
                                   }
                                   

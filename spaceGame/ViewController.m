@@ -38,6 +38,13 @@
     
     [self.view addSubview:self.enemyShip];
     
+    
+    NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
+    
+    [notificationCenter addObserver:self selector:@selector(shipRocketFinishedFlyAction) name:shipRocketFinishedFlyNotification object:nil];
+    
+    [notificationCenter addObserver:self selector:@selector(enemyRocketFinishedFlyAction) name:enemyRocketFinishedFlyNotification object:nil];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -47,6 +54,25 @@
     
     [self.enemyShip makeShootOnView:self.view];
     
+}
+
+- (void)dealloc {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - shipRocketFinishedFlyNotification
+
+- (void)shipRocketFinishedFlyAction {
+    
+    [self.spaceShip makeShootOnView:self.view];
+}
+
+#pragma mark - enemyRocketFinishedFlyNotification
+
+- (void)enemyRocketFinishedFlyAction {
+    
+    [self.enemyShip makeShootOnView:self.view];
 }
 
 #pragma mark - Setup Animation Background

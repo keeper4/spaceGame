@@ -9,6 +9,10 @@
 
 #import "UIKit/UIKit.h"
 
+extern NSString * const shipRocketFinishedFlyNotification;
+extern NSString * const enemyRocketFinishedFlyNotification;
+
+
 @interface ACRocket : UIImageView
 
 @property (assign, nonatomic) CGFloat height;
