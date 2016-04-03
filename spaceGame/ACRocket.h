@@ -19,6 +19,8 @@ extern NSString * const rocketCurrentPositionNotification;
 
 @property (assign, nonatomic) CGFloat height;
 @property (assign, nonatomic) CGFloat width;
+@property (assign, nonatomic) BOOL isHit;
+
 
 - (instancetype)initWithShipView:(UIView *)shipView;
 - (instancetype)initWithEnemyView:(UIView *)enemyView;

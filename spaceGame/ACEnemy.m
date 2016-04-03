@@ -19,7 +19,7 @@
 {
     self = [super init];
     if (self) {
-
+        
         [self makeShip];
     }
     return self;
@@ -27,8 +27,8 @@
 
 - (void) makeShip {
     
-   CGFloat widthShip = 50;
-   CGFloat heigthShip = 70;
+    CGFloat widthShip = 50;
+    CGFloat heigthShip = 70;
     
     CGRect screen = [[UIScreen mainScreen] bounds];
     
