@@ -13,6 +13,9 @@
 
 @interface SceneViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+
+@property (assign, nonatomic) NSUInteger score;
 @property (strong, nonatomic) ACSpaceShip *spaceShip;
 @property (strong, nonatomic) ACEnemy *enemyShip;
 
@@ -20,11 +23,16 @@
 
 @implementation SceneViewController
 
+static CGFloat animationDuration = 0.3f;
+static CGFloat shotDuration = 0.06f;
+
 
 - (void)viewDidLoad {
     [super viewDidLoad];
     
     [self setupBackgroundImageViews];
+    
+    [self setupScoreLabel:self.scoreLabel];
     
     //spaceShip Create
     
@@ -67,21 +75,18 @@
         
         rocket = [[ACRocket alloc] initWithShipView:view];
         
-        [rocket createRocketFromMidX:CGRectGetMidX(view.frame) minY:CGRectGetMinY(view.frame) withDuration:0.1];
+        [rocket createRocketFromMidX:CGRectGetMidX(view.frame) minY:CGRectGetMinY(view.frame) withDuration:shotDuration];
         
     } else if ([view isKindOfClass:[ACEnemy class]]) {
         
         rocket = [[ACRocket alloc] initWithEnemyView:view];
         
-        [rocket createRocketFromMidX:CGRectGetMidX(view.frame) maxY:CGRectGetMaxY(view.frame) withDuration:0.1];
+        [rocket createRocketFromMidX:CGRectGetMidX(view.frame) maxY:CGRectGetMaxY(view.frame) withDuration:shotDuration];
     }
     
     [self.view addSubview:rocket];
     
 }
-
-
-//TODO: - Find Why lifeQuantity works wrong. Where second life for enemy?
 
 #pragma mark - rocketCurrentPositionNotification
 
@@ -91,99 +96,43 @@
         
         ACRocket *rocket = notification.object;
         
-        if (CGRectContainsRect(self.enemyShip.frame, rocket.frame)) {
+        if (CGRectContainsRect(self.enemyShip.frame, rocket.frame)){
+            
+            [rocket removeFromSuperview];
+            rocket.isHit = YES;
+            rocket = nil;
             
             self.enemyShip.lifeQuantity -= 1;
             
-            [rocket removeFromSuperview];
-            
             if (self.enemyShip.lifeQuantity > 0) {
                 
-                [UIImageView animateWithDuration:0.3
-                                           delay:0
-                                         options:UIViewAnimationOptionCurveLinear
-                                      animations:^{
-                                          
-                                          self.enemyShip.alpha = 0.2f;
-                                          
-                                      } completion:^(BOOL finished) {
-                                          
-                                          [UIImageView animateWithDuration:0.3
-                                                                     delay:0
-                                                                   options:UIViewAnimationOptionCurveLinear
-                                                                animations:^{
-                                                                    
-                                                                    self.enemyShip.alpha = 1.f;
-                                                                    
-                                                                } completion:nil];
-                                          
-                                      }];
+                [self hitSpaceObjectAnimated:self.enemyShip];
                 
-            } else {
+            } else if (self.enemyShip.lifeQuantity == 0) {
                 
-                [UIImageView animateWithDuration:0.3
-                                           delay:0
-                                         options:UIViewAnimationOptionCurveLinear
-                                      animations:^{
-                                          
-                                          self.enemyShip.transform = CGAffineTransformMakeScale(0.01f, 0.01f);
-                                          
-                                      } completion:^(BOOL finished) {
-                                          
-                                          [self.enemyShip removeFromSuperview];
-                                          
-                                          self.enemyShip = [[ACEnemy alloc] init];
-                                          
-                                          [self.view addSubview:self.enemyShip];
-                                          
-                                      }];
+                self.scoreLabel.text = [NSString stringWithFormat:@" Score: %ld ", self.score += 1];
+                
+                [self removeSpaceObjectAnimated:self.enemyShip];
             }
             
         } else if (CGRectContainsRect(self.spaceShip.frame, rocket.frame)) {
             
-            self.spaceShip.lifeQuantity -= 1;
-            
             [rocket removeFromSuperview];
+            rocket.isHit = YES;
+            rocket = nil;
+            
+            self.spaceShip.lifeQuantity -= 1;
             
             if (self.spaceShip.lifeQuantity > 0) {
                 
-                [UIImageView animateWithDuration:0.3
-                                           delay:0
-                                         options:UIViewAnimationOptionCurveLinear
-                                      animations:^{
-                                          
-                                          self.spaceShip.alpha = 0.2f;
-                                          
-                                      } completion:^(BOOL finished) {
-                                          
-                                          [UIImageView animateWithDuration:0.3
-                                                                     delay:0
-                                                                   options:UIViewAnimationOptionCurveLinear
-                                                                animations:^{
-                                                                    
-                                                                    self.spaceShip.alpha = 1.f;
-                                                                    
-                                                                } completion:nil];
-                                      }];
-            } else {
+                [self hitSpaceObjectAnimated:self.spaceShip];
                 
-                [UIImageView animateWithDuration:0.3
-                                           delay:0
-                                         options:UIViewAnimationOptionCurveLinear
-                                      animations:^{
-                                          
-                                          self.spaceShip.transform = CGAffineTransformMakeScale(0.01f, 0.01f);
-                                          
-                                      } completion:^(BOOL finished) {
-                                          
-                                          [self.spaceShip removeFromSuperview];
-                                          
-                                          self.spaceShip = [[ACSpaceShip alloc] init];
-                                          
-                                          [self.view addSubview:self.spaceShip];
-                                          
-                                      }];
+            } else if (self.spaceShip.lifeQuantity == 0) {
                 
+                self.score = 0;
+                self.scoreLabel.text = @" Score: 0 " ;
+                
+                [self removeSpaceObjectAnimated:self.spaceShip];
             }
             
         }
@@ -204,6 +153,71 @@
 - (void)enemyRocketFinishedFlyAction {
     
     [self makeShootFromView:self.enemyShip];
+}
+
+#pragma mark - Animations
+
+- (void)hitSpaceObjectAnimated:(ACSpaceObject *)ship {
+    
+    [UIImageView animateWithDuration:animationDuration
+                               delay:0
+                             options:UIViewAnimationOptionCurveLinear
+                          animations:^{
+                              
+                              ship.alpha = 0.2f;
+                              
+                          } completion:^(BOOL finished) {
+                              
+                              [UIImageView animateWithDuration:animationDuration
+                                                         delay:0
+                                                       options:UIViewAnimationOptionCurveLinear
+                                                    animations:^{
+                                                        
+                                                        ship.alpha = 1.f;
+                                                        
+                                                    } completion:nil];
+                          }];
+    
+}
+
+- (void)removeSpaceObjectAnimated:(ACSpaceObject *)ship {
+    
+    [UIImageView animateWithDuration:animationDuration
+                               delay:0
+                             options:UIViewAnimationOptionCurveLinear
+                          animations:^{
+                              
+                              ship.transform = CGAffineTransformMakeScale(0.001f, 0.001f);
+                              
+                          } completion:^(BOOL finished) {
+                              
+                              [ship removeFromSuperview];
+                              
+                              if ([ship isKindOfClass:[ACSpaceShip class]]) {
+                                  
+                                  self.spaceShip = [[ACSpaceShip alloc] init];
+                                  [self.view addSubview:self.spaceShip];
+                                  
+                              } else if ([ship isKindOfClass:[ACEnemy class]]) {
+                                  
+                                  self.enemyShip = [[ACEnemy alloc] init];
+                                  [self.view addSubview:self.enemyShip];
+                              }
+                              
+                          }];
+    
+}
+
+#pragma mark - Setup ScoreLabel
+
+- (void)setupScoreLabel:(UILabel *)label {
+    
+    [self.view bringSubviewToFront:label];
+    
+    label.layer.borderColor = [UIColor whiteColor].CGColor;
+    label.layer.borderWidth = 1.f;
+    label.layer.cornerRadius = CGRectGetHeight(label.frame)/3;
+    
 }
 
 #pragma mark - Setup Animation Background

@@ -15,13 +15,12 @@ NSString * const rocketCurrentPositionNotification = @"rocketCurrentPositionNoti
 
 @implementation ACRocket
 
-static NSUInteger flyStep = 10;
+static NSUInteger flyStep = 1;
 
 #define screenHeight  ([[UIScreen mainScreen] bounds].size.height)
 
 
-- (instancetype)initWithShipView:(UIView *)shipView
-{
+- (instancetype)initWithShipView:(UIView *)shipView {
     self = [super init];
     if (self) {
         
@@ -36,8 +35,7 @@ static NSUInteger flyStep = 10;
     return self;
 }
 
-- (instancetype)initWithEnemyView:(UIView *)enemyView
-{
+- (instancetype)initWithEnemyView:(UIView *)enemyView {
     self = [super init];
     if (self) {
         
@@ -67,7 +65,7 @@ static NSUInteger flyStep = 10;
                                   
                                   NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
                                   
-                                  if (CGRectGetMaxY(self.frame) > 0) {
+                                  if (!self.isHit && CGRectGetMaxY(self.frame) > 0) {
                                       
                                       [center postNotificationName:rocketCurrentPositionNotification object:self];
                                       
@@ -99,7 +97,7 @@ static NSUInteger flyStep = 10;
                                   
                                   NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
                                   
-                                  if (CGRectGetMinY(self.frame) <= screenHeight) {
+                                  if (!self.isHit && CGRectGetMinY(self.frame) <= screenHeight) {
                                       
                                       [center postNotificationName:rocketCurrentPositionNotification object:self];
                                       
