@@ -27,7 +27,7 @@ static NSUInteger flyStep = 1;
         self.height = 30;
         self.width = 20;
         
-        self.frame = CGRectMake(CGRectGetMidX(shipView.frame) - self.width/2, CGRectGetMinY(shipView.frame) - 10, self.width, self.height);
+        self.frame = CGRectMake(CGRectGetMidX(shipView.frame) - self.width/2, CGRectGetMinY(shipView.frame), self.width, self.height);
         
         self.backgroundColor = [UIColor redColor];
         
@@ -42,7 +42,7 @@ static NSUInteger flyStep = 1;
         self.height = 30;
         self.width = 20;
         
-        self.frame = CGRectMake(CGRectGetMidX(enemyView.frame) - self.width/2, CGRectGetMaxY(enemyView.frame) + 10, self.width, self.height);
+        self.frame = CGRectMake(CGRectGetMidX(enemyView.frame) - self.width/2, CGRectGetMaxY(enemyView.frame), self.width, self.height);
         
         self.backgroundColor = [UIColor redColor];
         

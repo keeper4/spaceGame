@@ -13,8 +13,6 @@
 
 @property (assign, nonatomic) NSUInteger lifeQuantity;
 
-//@property (weak,nonatomic) UIView *rocket;
-
 //- (void)makeShootOnView:(UIView *)mainView;
 
 @end

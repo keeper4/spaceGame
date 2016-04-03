@@ -13,6 +13,9 @@
 
 @interface SceneViewController ()
 
+@property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+
+@property (assign, nonatomic) NSUInteger score;
 @property (strong, nonatomic) ACSpaceShip *spaceShip;
 @property (strong, nonatomic) ACEnemy *enemyShip;
 
@@ -28,6 +31,8 @@ static CGFloat shotDuration = 0.06f;
     [super viewDidLoad];
     
     [self setupBackgroundImageViews];
+    
+    [self setupScoreLabel:self.scoreLabel];
     
     //spaceShip Create
     
@@ -70,20 +75,18 @@ static CGFloat shotDuration = 0.06f;
         
         rocket = [[ACRocket alloc] initWithShipView:view];
         
-        [rocket createRocketFromMidX:CGRectGetMidX(view.frame) minY:CGRectGetMinY(view.frame) - 10 withDuration:shotDuration];
+        [rocket createRocketFromMidX:CGRectGetMidX(view.frame) minY:CGRectGetMinY(view.frame) withDuration:shotDuration];
         
     } else if ([view isKindOfClass:[ACEnemy class]]) {
         
         rocket = [[ACRocket alloc] initWithEnemyView:view];
         
-        [rocket createRocketFromMidX:CGRectGetMidX(view.frame) maxY:CGRectGetMaxY(view.frame) + 10 withDuration:shotDuration];
+        [rocket createRocketFromMidX:CGRectGetMidX(view.frame) maxY:CGRectGetMaxY(view.frame) withDuration:shotDuration];
     }
     
     [self.view addSubview:rocket];
     
 }
-
-//TODO: - Find Why lifeQuantity works wrong. Where the second life for enemy?
 
 #pragma mark - rocketCurrentPositionNotification
 
@@ -107,6 +110,8 @@ static CGFloat shotDuration = 0.06f;
                 
             } else if (self.enemyShip.lifeQuantity == 0) {
                 
+                self.scoreLabel.text = [NSString stringWithFormat:@" Score: %ld ", self.score += 1];
+                
                 [self removeSpaceObjectAnimated:self.enemyShip];
             }
             
@@ -123,6 +128,9 @@ static CGFloat shotDuration = 0.06f;
                 [self hitSpaceObjectAnimated:self.spaceShip];
                 
             } else if (self.spaceShip.lifeQuantity == 0) {
+                
+                self.score = 0;
+                self.scoreLabel.text = @" Score: 0 " ;
                 
                 [self removeSpaceObjectAnimated:self.spaceShip];
             }
@@ -197,6 +205,18 @@ static CGFloat shotDuration = 0.06f;
                               }
                               
                           }];
+    
+}
+
+#pragma mark - Setup ScoreLabel
+
+- (void)setupScoreLabel:(UILabel *)label {
+    
+    [self.view bringSubviewToFront:label];
+    
+    label.layer.borderColor = [UIColor whiteColor].CGColor;
+    label.layer.borderWidth = 1.f;
+    label.layer.cornerRadius = CGRectGetHeight(label.frame)/3;
     
 }
 
