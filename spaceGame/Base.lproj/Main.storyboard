@@ -89,7 +89,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" Score: 0" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nue-k9-TgX">
-                                <rect key="frame" x="243" y="20" width="61" height="20"/>
+                                <rect key="frame" x="247" y="20" width="61" height="20"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="20" id="J3h-aO-9ms"/>
                                 </constraints>
@@ -100,27 +100,15 @@
                         </subviews>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
-                            <constraint firstItem="nue-k9-TgX" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="20" id="98b-YK-JyH"/>
-                            <constraint firstItem="nue-k9-TgX" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="woF-O9-t7X"/>
+                            <constraint firstItem="nue-k9-TgX" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="98b-YK-JyH"/>
+                            <constraint firstItem="nue-k9-TgX" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" constant="4" id="woF-O9-t7X"/>
                         </constraints>
                     </view>
-<<<<<<< HEAD
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="586" y="284"/>
-=======
-                    <nil key="simulatedStatusBarMetrics"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                    <connections>
-                        <outlet property="scoreLabel" destination="nue-k9-TgX" id="IzL-Ej-Z1U"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="358" y="387"/>
->>>>>>> 9755d1ea7e5e2da423281152c2a3b3e9b46d6b16
         </scene>
     </scenes>
 </document>
