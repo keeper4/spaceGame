@@ -10,8 +10,9 @@
 
 @interface ACStartViewController : UIViewController
 
-- (IBAction)actionMusicSwitch:(UISwitch *)sender;
-
 @property (weak, nonatomic) IBOutlet UISwitch *musicSwitch;
+
+- (IBAction)actionMusicSwitch:(UISwitch *)sender;
+- (IBAction)actionExitButton:(UIButton *)sender;
 
 @end

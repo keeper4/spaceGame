@@ -80,6 +80,11 @@
     }
 }
 
+- (IBAction)actionExitButton:(UIButton *)sender {
+
+    exit(0);
+}
+
 #pragma mark - Segue
 
 - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
