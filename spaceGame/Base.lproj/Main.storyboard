@@ -57,6 +57,9 @@
                                         <integer key="value" value="4"/>
                                     </userDefinedRuntimeAttribute>
                                 </userDefinedRuntimeAttributes>
+                                <connections>
+                                    <action selector="actionExitButton:" destination="JV0-mj-nMl" eventType="touchUpInside" id="f7K-9W-pno"/>
+                                </connections>
                             </button>
                             <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NKP-nC-HvT">
                                 <rect key="frame" x="171" y="366" width="51" height="31"/>
