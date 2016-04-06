@@ -11,8 +11,7 @@
 
 @implementation ACStartViewController
 
-AVAudioPlayer *audioPlayer;
-
+    AVAudioPlayer *audioPlayer;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -27,22 +26,13 @@ AVAudioPlayer *audioPlayer;
     
     [self.view addSubview:startViewBackground];
     
+    [self checkStateSwitchSound];
+    
+    
     [self createPlayer];
     
     
     
-}
-
--(void)viewWillAppear:(BOOL)animated
-{
-    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"switch"]isEqualToString:@"on"] && self.musicSwitch.isOn) {
-        
-        self.musicSwitch.on = YES;
-        
-    }
-    else {
-        self.musicSwitch.on = NO;
-    }
 }
 
 #pragma mark - privateMethod
@@ -57,6 +47,17 @@ AVAudioPlayer *audioPlayer;
     
     if (self.musicSwitch.isOn) {
         [audioPlayer play];
+    }
+}
+
+- (void)checkStateSwitchSound {
+    if ([[[NSUserDefaults standardUserDefaults]valueForKey:@"switch"]isEqualToString:@"on"] && self.musicSwitch.isOn) {
+        
+        self.musicSwitch.on = YES;
+        
+    }
+    else {
+        self.musicSwitch.on = NO;
     }
 }
 
