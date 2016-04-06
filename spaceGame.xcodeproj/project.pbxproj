@@ -15,7 +15,7 @@
 		DE5A9BFD1CB18C51004755F0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE5A9BFC1CB18C51004755F0 /* AVFoundation.framework */; };
 		DE70D9041C99DD690087BB5C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70D9031C99DD690087BB5C /* main.m */; };
 		DE70D9071C99DD690087BB5C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70D9061C99DD690087BB5C /* AppDelegate.m */; };
-		DE70D90A1C99DD690087BB5C /* SceneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70D9091C99DD690087BB5C /* SceneViewController.m */; };
+		DE70D90A1C99DD690087BB5C /* ACSceneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70D9091C99DD690087BB5C /* ACSceneViewController.m */; };
 		DE70D90D1C99DD690087BB5C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE70D90B1C99DD690087BB5C /* Main.storyboard */; };
 		DE70D90F1C99DD690087BB5C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE70D90E1C99DD690087BB5C /* Assets.xcassets */; };
 		DE70D9121C99DD690087BB5C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE70D9101C99DD690087BB5C /* LaunchScreen.storyboard */; };
@@ -37,8 +37,8 @@
 		DE70D9031C99DD690087BB5C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		DE70D9051C99DD690087BB5C /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		DE70D9061C99DD690087BB5C /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
-		DE70D9081C99DD690087BB5C /* SceneViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = SceneViewController.h; sourceTree = "<group>"; };
-		DE70D9091C99DD690087BB5C /* SceneViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = SceneViewController.m; sourceTree = "<group>"; };
+		DE70D9081C99DD690087BB5C /* ACSceneViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ACSceneViewController.h; sourceTree = "<group>"; };
+		DE70D9091C99DD690087BB5C /* ACSceneViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ACSceneViewController.m; sourceTree = "<group>"; };
 		DE70D90C1C99DD690087BB5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		DE70D90E1C99DD690087BB5C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE70D9111C99DD690087BB5C /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -77,8 +77,8 @@
 		DE1D912D1CB55DC700E70051 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				DE70D9081C99DD690087BB5C /* SceneViewController.h */,
-				DE70D9091C99DD690087BB5C /* SceneViewController.m */,
+				DE70D9081C99DD690087BB5C /* ACSceneViewController.h */,
+				DE70D9091C99DD690087BB5C /* ACSceneViewController.m */,
 				DE5A9BEF1CB17F26004755F0 /* ACStartViewController.h */,
 				DE5A9BF01CB17F26004755F0 /* ACStartViewController.m */,
 			);
@@ -209,7 +209,7 @@
 			files = (
 				DE2B3B221C9DD27900EE1D36 /* ACRocket.m in Sources */,
 				DE70D91B1C99DDD60087BB5C /* ACSpaceShip.m in Sources */,
-				DE70D90A1C99DD690087BB5C /* SceneViewController.m in Sources */,
+				DE70D90A1C99DD690087BB5C /* ACSceneViewController.m in Sources */,
 				DE5A9BF11CB17F26004755F0 /* ACStartViewController.m in Sources */,
 				DE70D9071C99DD690087BB5C /* AppDelegate.m in Sources */,
 				DE2C18381C9F1F90002B9427 /* ACEnemy.m in Sources */,

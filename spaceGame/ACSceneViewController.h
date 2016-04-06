@@ -8,7 +8,7 @@
 
 #import <UIKit/UIKit.h>
 
-@interface SceneViewController : UIViewController
+@interface ACSceneViewController : UIViewController
 
 
 @end

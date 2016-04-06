@@ -6,14 +6,15 @@
 //  Copyright © 2016 Aleksandr Chyzh. All rights reserved.
 //
 
-#import "SceneViewController.h"
+#import "ACSceneViewController.h"
 #import "ACSpaceShip.h"
 #import "ACEnemy.h"
 
 
-@interface SceneViewController ()
+@interface ACSceneViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
+@property (weak, nonatomic) IBOutlet UICollectionView *healthCollection;
 
 @property (assign, nonatomic) NSUInteger score;
 @property (strong, nonatomic) ACSpaceShip *spaceShip;
@@ -21,7 +22,7 @@
 
 @end
 
-@implementation SceneViewController
+@implementation ACSceneViewController
 
 static CGFloat animationDuration = 0.3f;
 static CGFloat shotDuration = 0.06f;
@@ -30,9 +31,6 @@ static CGFloat shotDuration = 0.06f;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
-    [self setupBackgroundImageViews];
-    
-    [self setupScoreLabel:self.scoreLabel];
     
     //spaceShip Create
     
@@ -55,6 +53,15 @@ static CGFloat shotDuration = 0.06f;
     
     [notificationCenter addObserver:self selector:@selector(checkForRocketHits:) name:rocketCurrentPositionNotification object:nil];
     
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
+    [self setupBackgroundImageViews];
+    
+    [self setupScoreLabel:self.scoreLabel];
+
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -98,8 +105,8 @@ static CGFloat shotDuration = 0.06f;
         
         if (CGRectContainsRect(self.enemyShip.frame, rocket.frame)){
             
-            [rocket removeFromSuperview];
             rocket.isHit = YES;
+            [rocket removeFromSuperview];
             rocket = nil;
             
             self.enemyShip.lifeQuantity -= 1;
@@ -117,11 +124,13 @@ static CGFloat shotDuration = 0.06f;
             
         } else if (CGRectContainsRect(self.spaceShip.frame, rocket.frame)) {
             
-            [rocket removeFromSuperview];
             rocket.isHit = YES;
+            [rocket removeFromSuperview];
             rocket = nil;
             
             self.spaceShip.lifeQuantity -= 1;
+            
+            [self.healthCollection reloadData];
             
             if (self.spaceShip.lifeQuantity > 0) {
                 
@@ -134,6 +143,7 @@ static CGFloat shotDuration = 0.06f;
                 
                 [self removeSpaceObjectAnimated:self.spaceShip];
             }
+            
             
         }
         
@@ -198,6 +208,8 @@ static CGFloat shotDuration = 0.06f;
                                   self.spaceShip = [[ACSpaceShip alloc] init];
                                   [self.view addSubview:self.spaceShip];
                                   
+                                  [self.healthCollection reloadData];
+                                  
                               } else if ([ship isKindOfClass:[ACEnemy class]]) {
                                   
                                   self.enemyShip = [[ACEnemy alloc] init];
@@ -205,6 +217,24 @@ static CGFloat shotDuration = 0.06f;
                               }
                               
                           }];
+    
+}
+
+#pragma mark - UICollectionViewDataSource
+
+- (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
+    
+    return self.spaceShip.lifeQuantity;
+}
+
+
+- (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
+    
+    static NSString *identifier = @"heartCell";
+    
+    UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:identifier forIndexPath:indexPath];
+    
+    return cell;
     
 }
 
@@ -230,6 +260,8 @@ static CGFloat shotDuration = 0.06f;
     CGRect viewRect = self.view.frame;
     
     backgroundViewFirst.frame = viewRect;
+    backgroundViewFirst.layer.zPosition = -1;
+    
     
     UIImageView *backgroundViewSecond = [[UIImageView alloc] initWithImage:backgroundImage];
     
@@ -237,6 +269,8 @@ static CGFloat shotDuration = 0.06f;
                                             -CGRectGetHeight(viewRect),
                                             CGRectGetWidth(viewRect),
                                             CGRectGetHeight(viewRect));
+    
+    backgroundViewSecond.layer.zPosition = -1;
     
     
     [self.view addSubview:backgroundViewFirst];
@@ -301,7 +335,7 @@ static CGFloat shotDuration = 0.06f;
                          completion:^(BOOL finished) {
                          }];
         
-    } else  if(pointTouch.x > CGRectGetMidX(self.view.frame) &&
+    } else if (pointTouch.x > CGRectGetMidX(self.view.frame) &&
                CGRectGetMaxX(self.view.frame) >= CGRectGetMaxX(self.spaceShip.frame)+delta) {
         
         CGFloat newX = oldX+delta;

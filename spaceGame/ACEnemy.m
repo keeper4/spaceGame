@@ -43,7 +43,7 @@
     
     self.image = [UIImage imageNamed:@"enemy"];
     
-    self.lifeQuantity = 2;
+    self.lifeQuantity = 1;
 }
 
 @end

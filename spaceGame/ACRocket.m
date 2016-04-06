@@ -29,7 +29,6 @@ static NSUInteger flyStep = 1;
         
         self.frame = CGRectMake(CGRectGetMidX(shipView.frame) - self.width/2, CGRectGetMinY(shipView.frame), self.width, self.height);
         
-        //self.backgroundColor = [UIColor redColor];
         self.image = [UIImage imageNamed:@"redRocket"];
     }
     return self;
@@ -44,7 +43,6 @@ static NSUInteger flyStep = 1;
         
         self.frame = CGRectMake(CGRectGetMidX(enemyView.frame) - self.width/2, CGRectGetMaxY(enemyView.frame), self.width, self.height);
         
-        //self.backgroundColor = [UIColor redColor];
         self.image = [UIImage imageNamed:@"seaRocket"];
     }
     return self;
