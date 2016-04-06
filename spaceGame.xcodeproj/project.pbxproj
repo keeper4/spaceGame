@@ -74,6 +74,17 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		DE1D912D1CB55DC700E70051 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				DE70D9081C99DD690087BB5C /* SceneViewController.h */,
+				DE70D9091C99DD690087BB5C /* SceneViewController.m */,
+				DE5A9BEF1CB17F26004755F0 /* ACStartViewController.h */,
+				DE5A9BF01CB17F26004755F0 /* ACStartViewController.m */,
+			);
+			name = Controllers;
+			sourceTree = "<group>";
+		};
 		DE5A9BFE1CB18E64004755F0 /* Sound */ = {
 			isa = PBXGroup;
 			children = (
@@ -103,15 +114,12 @@
 		DE70D9011C99DD690087BB5C /* spaceGame */ = {
 			isa = PBXGroup;
 			children = (
+				DE5A9BFE1CB18E64004755F0 /* Sound */,
 				DE70D9051C99DD690087BB5C /* AppDelegate.h */,
 				DE70D9061C99DD690087BB5C /* AppDelegate.m */,
-				DE5A9BFE1CB18E64004755F0 /* Sound */,
 				BA0E7BD71CA85D9F00FF1210 /* Models */,
-				DE70D9081C99DD690087BB5C /* SceneViewController.h */,
-				DE70D9091C99DD690087BB5C /* SceneViewController.m */,
+				DE1D912D1CB55DC700E70051 /* Controllers */,
 				DE70D90B1C99DD690087BB5C /* Main.storyboard */,
-				DE5A9BEF1CB17F26004755F0 /* ACStartViewController.h */,
-				DE5A9BF01CB17F26004755F0 /* ACStartViewController.m */,
 				DE70D90E1C99DD690087BB5C /* Assets.xcassets */,
 				DE70D9101C99DD690087BB5C /* LaunchScreen.storyboard */,
 				DE70D9131C99DD690087BB5C /* Info.plist */,
