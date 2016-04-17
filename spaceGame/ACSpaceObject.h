@@ -13,6 +13,7 @@
 
 @property (assign, nonatomic) NSUInteger lifeQuantity;
 
+@property (assign, nonatomic) BOOL isHit;
 //- (void)makeShootOnView:(UIView *)mainView;
 
 @end

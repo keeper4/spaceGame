@@ -25,8 +25,4 @@ extern NSString * const rocketCurrentPositionNotification;
 - (instancetype)initWithShipView:(UIView *)shipView;
 - (instancetype)initWithEnemyView:(UIView *)enemyView;
 
-- (void)createRocketFromMidX:(CGFloat)midX minY:(CGFloat)minY withDuration:(NSTimeInterval)duration;
-
-- (void)createRocketFromMidX:(CGFloat)midX maxY:(CGFloat)maxY withDuration:(NSTimeInterval)duration;
-
 @end

@@ -9,6 +9,8 @@
 #import <UIKit/UIKit.h>
 #import "ACSpaceObject.h"
 
+extern NSString * const enemyShipFinishedFlyNotification;
+
 @interface ACEnemy : ACSpaceObject
 
 @end

@@ -25,7 +25,6 @@
 @implementation ACSceneViewController
 
 static CGFloat animationDuration = 0.3f;
-static CGFloat shotDuration = 0.06f;
 
 
 - (void)viewDidLoad {
@@ -47,11 +46,25 @@ static CGFloat shotDuration = 0.06f;
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     
-    [notificationCenter addObserver:self selector:@selector(shipRocketFinishedFlyAction) name:shipRocketFinishedFlyNotification object:nil];
+    [notificationCenter addObserver:self
+                           selector:@selector(shipRocketFinishedFlyAction)
+                               name:shipRocketFinishedFlyNotification
+                             object:nil];
     
-    [notificationCenter addObserver:self selector:@selector(enemyRocketFinishedFlyAction) name:enemyRocketFinishedFlyNotification object:nil];
+    [notificationCenter addObserver:self
+                           selector:@selector(enemyRocketFinishedFlyAction)
+                               name:enemyRocketFinishedFlyNotification
+                             object:nil];
     
-    [notificationCenter addObserver:self selector:@selector(checkForRocketHits:) name:rocketCurrentPositionNotification object:nil];
+    [notificationCenter addObserver:self
+                           selector:@selector(checkForRocketHits:)
+                               name:rocketCurrentPositionNotification
+                             object:nil];
+    
+    [notificationCenter addObserver:self
+                           selector:@selector(enemyShipFinishedFlyAction)
+                               name:enemyShipFinishedFlyNotification
+                             object:nil];
     
 }
 
@@ -82,13 +95,9 @@ static CGFloat shotDuration = 0.06f;
         
         rocket = [[ACRocket alloc] initWithShipView:view];
         
-        [rocket createRocketFromMidX:CGRectGetMidX(view.frame) minY:CGRectGetMinY(view.frame) withDuration:shotDuration];
-        
     } else if ([view isKindOfClass:[ACEnemy class]]) {
         
         rocket = [[ACRocket alloc] initWithEnemyView:view];
-        
-        [rocket createRocketFromMidX:CGRectGetMidX(view.frame) maxY:CGRectGetMaxY(view.frame) withDuration:shotDuration];
     }
     
     [self.view addSubview:rocket];
@@ -103,7 +112,7 @@ static CGFloat shotDuration = 0.06f;
         
         ACRocket *rocket = notification.object;
         
-        if (CGRectContainsRect(self.enemyShip.frame, rocket.frame)){
+        if (CGRectIntersectsRect(self.enemyShip.frame, rocket.frame)) {
             
             rocket.isHit = YES;
             [rocket removeFromSuperview];
@@ -117,12 +126,14 @@ static CGFloat shotDuration = 0.06f;
                 
             } else if (self.enemyShip.lifeQuantity == 0) {
                 
+                self.enemyShip.isHit = YES;
+
                 self.scoreLabel.text = [NSString stringWithFormat:@" Score: %ld ", self.score += 1];
                 
                 [self removeSpaceObjectAnimated:self.enemyShip];
             }
             
-        } else if (CGRectContainsRect(self.spaceShip.frame, rocket.frame)) {
+        } else if (CGRectIntersectsRect(self.spaceShip.frame, rocket.frame)) {
             
             rocket.isHit = YES;
             [rocket removeFromSuperview];
@@ -144,7 +155,6 @@ static CGFloat shotDuration = 0.06f;
                 [self removeSpaceObjectAnimated:self.spaceShip];
             }
             
-            
         }
         
     }
@@ -163,6 +173,19 @@ static CGFloat shotDuration = 0.06f;
 - (void)enemyRocketFinishedFlyAction {
     
     [self makeShootFromView:self.enemyShip];
+}
+
+#pragma mark - enemyShipFinishedFlyNotification
+
+- (void)enemyShipFinishedFlyAction {
+    
+    [self.enemyShip removeFromSuperview];
+    self.enemyShip = nil;
+    
+    self.enemyShip = [[ACEnemy alloc] init];
+
+    [self.view addSubview:self.enemyShip];
+    
 }
 
 #pragma mark - Animations
@@ -363,7 +386,7 @@ static CGFloat shotDuration = 0.06f;
 - (IBAction)actionPauseButton:(UIButton *)sender {
     
     UIViewController *nav = [self.storyboard instantiateViewControllerWithIdentifier:@"ACPauseControllerViewController"];
-
+    
     [self presentViewController:nav animated:YES completion:nil];
     
 }

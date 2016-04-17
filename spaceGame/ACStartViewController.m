@@ -31,8 +31,6 @@
     
     [self createPlayer];
     
-    
-    
 }
 
 #pragma mark - privateMethod
