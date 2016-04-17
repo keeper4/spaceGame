@@ -10,8 +10,9 @@
 #import "ACSpaceShip.h"
 #import "ACEnemy.h"
 #import "ACPauseControllerViewController.h"
+#import "ACGameOverController.h"
 
-@interface ACSceneViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
+@interface ACSceneViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UIGestureRecognizerDelegate>
 
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *healthCollection;
@@ -19,7 +20,7 @@
 @property (assign, nonatomic) NSUInteger score;
 @property (strong, nonatomic) ACSpaceShip *spaceShip;
 @property (strong, nonatomic) ACEnemy *enemyShip;
-
+@property (strong, nonatomic) UILongPressGestureRecognizer *lpgr;
 @end
 
 @implementation ACSceneViewController
@@ -66,6 +67,14 @@ static CGFloat animationDuration = 0.3f;
                                name:enemyShipFinishedFlyNotification
                              object:nil];
     
+    
+    UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc] initWithTarget:self
+                                                                                       action:@selector(handleLongPress:)];
+    lpgr.delegate = self;
+    lpgr.delaysTouchesBegan = YES;
+    lpgr.minimumPressDuration = 0.2f;
+    [self.view addGestureRecognizer:lpgr];
+    
 }
 
 - (void)viewWillAppear:(BOOL)animated {
@@ -104,6 +113,19 @@ static CGFloat animationDuration = 0.3f;
     
 }
 
+- (void)animationWithDelta:(CGFloat)delta oldX:(CGFloat)oldX newX:(CGFloat)newX gestureRecognizer:(UILongPressGestureRecognizer *)gestureRecognizer
+{
+    [UIView animateWithDuration:0.2f
+                          delay:0
+                        options:UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         self.spaceShip.center = CGPointMake(newX, CGRectGetMaxY(self.view.frame)-self.spaceShip.frame.size.width/2);
+                     }
+                     completion:^(BOOL finished) {
+                         [self handleLongPress:gestureRecognizer];
+                     }];
+}
+
 #pragma mark - rocketCurrentPositionNotification
 
 - (void)checkForRocketHits:(NSNotification *)notification {
@@ -127,8 +149,8 @@ static CGFloat animationDuration = 0.3f;
             } else if (self.enemyShip.lifeQuantity == 0) {
                 
                 self.enemyShip.isHit = YES;
-
-                self.scoreLabel.text = [NSString stringWithFormat:@" Score: %ld ", self.score += 1];
+                
+                self.scoreLabel.text = [NSString stringWithFormat:@" Score: %u ", self.score += 1];
                 
                 [self removeSpaceObjectAnimated:self.enemyShip];
             }
@@ -153,6 +175,15 @@ static CGFloat animationDuration = 0.3f;
                 self.scoreLabel.text = @" Score: 0 " ;
                 
                 [self removeSpaceObjectAnimated:self.spaceShip];
+                
+                /*    ACGameOverController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ACGameOverController"];
+                 
+                 
+                 vc.score = self.score;
+                 [self showViewController:vc sender:nil];
+                 
+                 [self presentViewController:vc animated:YES completion:nil];
+                 */
             }
             
         }
@@ -183,7 +214,7 @@ static CGFloat animationDuration = 0.3f;
     self.enemyShip = nil;
     
     self.enemyShip = [[ACEnemy alloc] init];
-
+    
     [self.view addSubview:self.enemyShip];
     
 }
@@ -335,42 +366,31 @@ static CGFloat animationDuration = 0.3f;
 
 #pragma mark - Touch
 
-- (void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event {
-    
-    CGFloat delta = 20.f;
+
+
+-(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
+{
+    CGFloat delta = 30.f;
     CGFloat oldX = CGRectGetMidX(self.spaceShip.frame);
     
-    UITouch *touch = [touches anyObject];
+    CGPoint pointTouch = [gestureRecognizer locationInView:self.view];
     
-    CGPoint pointTouch = [touch locationInView:self.view];
-    
-    if (pointTouch.x <= CGRectGetMidX(self.view.frame) &&
-        CGRectGetMinX(self.view.frame) <= CGRectGetMinX(self.spaceShip.frame)-delta) {
+    if(gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         
-        CGFloat newX = oldX-delta;
-        
-        [UIView animateWithDuration:0.3f
-                              delay:0
-                            options:UIViewAnimationOptionCurveLinear
-                         animations:^{
-                             self.spaceShip.center = CGPointMake(newX, CGRectGetMaxY(self.view.frame)-self.spaceShip.frame.size.width/2);
-                         }
-                         completion:^(BOOL finished) {
-                         }];
-        
-    } else if (pointTouch.x > CGRectGetMidX(self.view.frame) &&
-               CGRectGetMaxX(self.view.frame) >= CGRectGetMaxX(self.spaceShip.frame)+delta) {
-        
-        CGFloat newX = oldX+delta;
-        
-        [UIView animateWithDuration:0.3f
-                              delay:0
-                            options:UIViewAnimationOptionCurveLinear
-                         animations:^{
-                             self.spaceShip.center = CGPointMake(newX, CGRectGetMaxY(self.view.frame)-self.spaceShip.frame.size.width/2);
-                         }
-                         completion:^(BOOL finished) {
-                         }];
+        if (pointTouch.x <= CGRectGetMidX(self.view.frame) &&
+            CGRectGetMinX(self.view.frame) <= CGRectGetMinX(self.spaceShip.frame)-delta) {
+            
+            CGFloat newX = oldX-delta;
+            
+            [self animationWithDelta:delta oldX:oldX newX:newX gestureRecognizer:gestureRecognizer];
+            
+        } else if (pointTouch.x > CGRectGetMidX(self.view.frame) &&
+                   CGRectGetMaxX(self.view.frame) >= CGRectGetMaxX(self.spaceShip.frame)+delta) {
+            
+            CGFloat newX = oldX+delta;
+            
+            [self animationWithDelta:delta oldX:oldX newX:newX gestureRecognizer:gestureRecognizer];
+        }
     }
 }
 

@@ -320,6 +320,10 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
+                    <connections>
+                        <outlet property="mineBestScoreLabel" destination="rLV-U6-cgc" id="ABy-0x-Y2r"/>
+                        <outlet property="scoreLable" destination="wUm-hp-rDj" id="2zP-ms-MG5"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VyR-th-2SF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

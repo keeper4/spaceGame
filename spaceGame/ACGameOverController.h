@@ -10,4 +10,9 @@
 
 @interface ACGameOverController : UIViewController
 
+@property (assign, nonatomic) NSInteger score;
+
+@property (weak, nonatomic) IBOutlet UILabel *scoreLable;
+@property (weak, nonatomic) IBOutlet UILabel *mineBestScoreLabel;
+
 @end
