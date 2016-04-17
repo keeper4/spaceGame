@@ -9,7 +9,7 @@
 #import "ACSceneViewController.h"
 #import "ACSpaceShip.h"
 #import "ACEnemy.h"
-
+#import "ACPauseControllerViewController.h"
 
 @interface ACSceneViewController () <UICollectionViewDataSource, UICollectionViewDelegate>
 
@@ -61,7 +61,7 @@ static CGFloat shotDuration = 0.06f;
     [self setupBackgroundImageViews];
     
     [self setupScoreLabel:self.scoreLabel];
-
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
@@ -358,4 +358,13 @@ static CGFloat shotDuration = 0.06f;
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
+#pragma mark - Actions
+
+- (IBAction)actionPauseButton:(UIButton *)sender {
+    
+    UIViewController *nav = [self.storyboard instantiateViewControllerWithIdentifier:@"ACPauseControllerViewController"];
+
+    [self presentViewController:nav animated:YES completion:nil];
+    
+}
 @end

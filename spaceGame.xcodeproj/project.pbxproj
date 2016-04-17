@@ -20,6 +20,8 @@
 		DE70D90F1C99DD690087BB5C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE70D90E1C99DD690087BB5C /* Assets.xcassets */; };
 		DE70D9121C99DD690087BB5C /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DE70D9101C99DD690087BB5C /* LaunchScreen.storyboard */; };
 		DE70D91B1C99DDD60087BB5C /* ACSpaceShip.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70D91A1C99DDD60087BB5C /* ACSpaceShip.m */; };
+		DE80AE6D1CC3874500E8DE73 /* ACPauseControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE80AE6C1CC3874500E8DE73 /* ACPauseControllerViewController.m */; };
+		DE80AE771CC3B59A00E8DE73 /* ACGameOverController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE80AE761CC3B59A00E8DE73 /* ACGameOverController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +47,10 @@
 		DE70D9131C99DD690087BB5C /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		DE70D9191C99DDD60087BB5C /* ACSpaceShip.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACSpaceShip.h; sourceTree = "<group>"; };
 		DE70D91A1C99DDD60087BB5C /* ACSpaceShip.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACSpaceShip.m; sourceTree = "<group>"; };
+		DE80AE6B1CC3874500E8DE73 /* ACPauseControllerViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACPauseControllerViewController.h; sourceTree = "<group>"; };
+		DE80AE6C1CC3874500E8DE73 /* ACPauseControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACPauseControllerViewController.m; sourceTree = "<group>"; };
+		DE80AE751CC3B59A00E8DE73 /* ACGameOverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACGameOverController.h; sourceTree = "<group>"; };
+		DE80AE761CC3B59A00E8DE73 /* ACGameOverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACGameOverController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,10 +83,14 @@
 		DE1D912D1CB55DC700E70051 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				DE70D9081C99DD690087BB5C /* ACSceneViewController.h */,
-				DE70D9091C99DD690087BB5C /* ACSceneViewController.m */,
 				DE5A9BEF1CB17F26004755F0 /* ACStartViewController.h */,
 				DE5A9BF01CB17F26004755F0 /* ACStartViewController.m */,
+				DE70D9081C99DD690087BB5C /* ACSceneViewController.h */,
+				DE70D9091C99DD690087BB5C /* ACSceneViewController.m */,
+				DE80AE6B1CC3874500E8DE73 /* ACPauseControllerViewController.h */,
+				DE80AE6C1CC3874500E8DE73 /* ACPauseControllerViewController.m */,
+				DE80AE751CC3B59A00E8DE73 /* ACGameOverController.h */,
+				DE80AE761CC3B59A00E8DE73 /* ACGameOverController.m */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -115,11 +125,11 @@
 			isa = PBXGroup;
 			children = (
 				DE5A9BFE1CB18E64004755F0 /* Sound */,
+				BA0E7BD71CA85D9F00FF1210 /* Models */,
 				DE70D9051C99DD690087BB5C /* AppDelegate.h */,
 				DE70D9061C99DD690087BB5C /* AppDelegate.m */,
-				BA0E7BD71CA85D9F00FF1210 /* Models */,
-				DE1D912D1CB55DC700E70051 /* Controllers */,
 				DE70D90B1C99DD690087BB5C /* Main.storyboard */,
+				DE1D912D1CB55DC700E70051 /* Controllers */,
 				DE70D90E1C99DD690087BB5C /* Assets.xcassets */,
 				DE70D9101C99DD690087BB5C /* LaunchScreen.storyboard */,
 				DE70D9131C99DD690087BB5C /* Info.plist */,
@@ -208,6 +218,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE2B3B221C9DD27900EE1D36 /* ACRocket.m in Sources */,
+				DE80AE771CC3B59A00E8DE73 /* ACGameOverController.m in Sources */,
+				DE80AE6D1CC3874500E8DE73 /* ACPauseControllerViewController.m in Sources */,
 				DE70D91B1C99DDD60087BB5C /* ACSpaceShip.m in Sources */,
 				DE70D90A1C99DD690087BB5C /* ACSceneViewController.m in Sources */,
 				DE5A9BF11CB17F26004755F0 /* ACStartViewController.m in Sources */,

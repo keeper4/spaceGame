@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 
 @interface ACSceneViewController : UIViewController
+- (IBAction)actionPauseButton:(UIButton *)sender;
 
 
 @end
