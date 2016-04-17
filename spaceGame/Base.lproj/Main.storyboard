@@ -253,7 +253,7 @@
         <!--gameOver-->
         <scene sceneID="79j-6I-MOo">
             <objects>
-                <viewController title="gameOver" id="RU4-af-W2N" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ACGameOverController" title="gameOver" id="RU4-af-W2N" customClass="ACGameOverController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="P8c-uA-TEs"/>
                         <viewControllerLayoutGuide type="bottom" id="B58-hx-786"/>
@@ -328,6 +328,6 @@
     </scenes>
     <resources>
         <image name="Heart" width="50" height="50"/>
-        <image name="Pause Filled-50" width="50" height="50"/>
+        <image name="Pause Filled-50" width="25" height="25"/>
     </resources>
 </document>

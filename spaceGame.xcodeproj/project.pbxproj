@@ -11,7 +11,6 @@
 		DE2C18381C9F1F90002B9427 /* ACEnemy.m in Sources */ = {isa = PBXBuildFile; fileRef = DE2C18371C9F1F90002B9427 /* ACEnemy.m */; };
 		DE2C183B1C9F3278002B9427 /* ACSpaceObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DE2C183A1C9F3278002B9427 /* ACSpaceObject.m */; };
 		DE5A9BF11CB17F26004755F0 /* ACStartViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE5A9BF01CB17F26004755F0 /* ACStartViewController.m */; };
-		DE5A9BF91CB18B8F004755F0 /* SuperBonk_TwilightSpace.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DE5A9BF81CB18B8F004755F0 /* SuperBonk_TwilightSpace.mp3 */; };
 		DE5A9BFD1CB18C51004755F0 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = DE5A9BFC1CB18C51004755F0 /* AVFoundation.framework */; };
 		DE70D9041C99DD690087BB5C /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70D9031C99DD690087BB5C /* main.m */; };
 		DE70D9071C99DD690087BB5C /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70D9061C99DD690087BB5C /* AppDelegate.m */; };
@@ -22,6 +21,7 @@
 		DE70D91B1C99DDD60087BB5C /* ACSpaceShip.m in Sources */ = {isa = PBXBuildFile; fileRef = DE70D91A1C99DDD60087BB5C /* ACSpaceShip.m */; };
 		DE80AE6D1CC3874500E8DE73 /* ACPauseControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE80AE6C1CC3874500E8DE73 /* ACPauseControllerViewController.m */; };
 		DE80AE771CC3B59A00E8DE73 /* ACGameOverController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE80AE761CC3B59A00E8DE73 /* ACGameOverController.m */; };
+		DE80AE7B1CC3D1C700E8DE73 /* SuperBonk_TwilightSpace.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DE80AE7A1CC3D1C700E8DE73 /* SuperBonk_TwilightSpace.mp3 */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,7 +33,6 @@
 		DE2C183A1C9F3278002B9427 /* ACSpaceObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACSpaceObject.m; sourceTree = "<group>"; };
 		DE5A9BEF1CB17F26004755F0 /* ACStartViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACStartViewController.h; sourceTree = "<group>"; };
 		DE5A9BF01CB17F26004755F0 /* ACStartViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACStartViewController.m; sourceTree = "<group>"; };
-		DE5A9BF81CB18B8F004755F0 /* SuperBonk_TwilightSpace.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = SuperBonk_TwilightSpace.mp3; sourceTree = "<group>"; };
 		DE5A9BFC1CB18C51004755F0 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		DE70D8FF1C99DD690087BB5C /* spaceGame.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = spaceGame.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE70D9031C99DD690087BB5C /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
@@ -51,6 +50,7 @@
 		DE80AE6C1CC3874500E8DE73 /* ACPauseControllerViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACPauseControllerViewController.m; sourceTree = "<group>"; };
 		DE80AE751CC3B59A00E8DE73 /* ACGameOverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACGameOverController.h; sourceTree = "<group>"; };
 		DE80AE761CC3B59A00E8DE73 /* ACGameOverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACGameOverController.m; sourceTree = "<group>"; };
+		DE80AE7A1CC3D1C700E8DE73 /* SuperBonk_TwilightSpace.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = SuperBonk_TwilightSpace.mp3; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -95,15 +95,6 @@
 			name = Controllers;
 			sourceTree = "<group>";
 		};
-		DE5A9BFE1CB18E64004755F0 /* Sound */ = {
-			isa = PBXGroup;
-			children = (
-				DE5A9BF81CB18B8F004755F0 /* SuperBonk_TwilightSpace.mp3 */,
-			);
-			name = Sound;
-			path = ..;
-			sourceTree = "<group>";
-		};
 		DE70D8F61C99DD690087BB5C = {
 			isa = PBXGroup;
 			children = (
@@ -124,7 +115,7 @@
 		DE70D9011C99DD690087BB5C /* spaceGame */ = {
 			isa = PBXGroup;
 			children = (
-				DE5A9BFE1CB18E64004755F0 /* Sound */,
+				DE80AE7C1CC3D1F700E8DE73 /* Sound */,
 				BA0E7BD71CA85D9F00FF1210 /* Models */,
 				DE1D912D1CB55DC700E70051 /* Controllers */,
 				DE70D90B1C99DD690087BB5C /* Main.storyboard */,
@@ -144,6 +135,15 @@
 				DE70D9031C99DD690087BB5C /* main.m */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		DE80AE7C1CC3D1F700E8DE73 /* Sound */ = {
+			isa = PBXGroup;
+			children = (
+				DE80AE7A1CC3D1C700E8DE73 /* SuperBonk_TwilightSpace.mp3 */,
+			);
+			name = Sound;
+			path = ..;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -204,7 +204,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE70D9121C99DD690087BB5C /* LaunchScreen.storyboard in Resources */,
-				DE5A9BF91CB18B8F004755F0 /* SuperBonk_TwilightSpace.mp3 in Resources */,
+				DE80AE7B1CC3D1C700E8DE73 /* SuperBonk_TwilightSpace.mp3 in Resources */,
 				DE70D90F1C99DD690087BB5C /* Assets.xcassets in Resources */,
 				DE70D90D1C99DD690087BB5C /* Main.storyboard in Resources */,
 			);
@@ -335,7 +335,7 @@
 		DE70D9171C99DD690087BB5C /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				INFOPLIST_FILE = spaceGame/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.alecsandrchyzh.spaceGame;
@@ -346,7 +346,7 @@
 		DE70D9181C99DD690087BB5C /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = "AppIcon-1";
 				INFOPLIST_FILE = spaceGame/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.alecsandrchyzh.spaceGame;
