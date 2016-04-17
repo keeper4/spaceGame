@@ -15,17 +15,7 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    CGRect screen = [[UIScreen mainScreen] bounds];
-    
-    UIImageView *startViewBackground = [[UIImageView alloc] initWithFrame:screen];
-    
-    startViewBackground.image = [UIImage imageNamed:@"background"];
-    
-    startViewBackground.layer.zPosition = -1;
-    
-    [self.view addSubview:startViewBackground];
-    
+        
     [self checkStateSwitchSound];
     
     

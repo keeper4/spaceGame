@@ -32,8 +32,8 @@ static NSUInteger flyStep = 5;
 
 - (void) makeShip {
     
-    CGFloat widthShip = 50;
-    CGFloat heigthShip = 70;
+    CGFloat widthShip = 40;
+    CGFloat heigthShip = 50;
     
     CGRect screen = [[UIScreen mainScreen] bounds];
     

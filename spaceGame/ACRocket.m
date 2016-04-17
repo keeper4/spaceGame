@@ -16,9 +16,10 @@ NSString * const rocketCurrentPositionNotification = @"rocketCurrentPositionNoti
 @implementation ACRocket
 
 static NSUInteger flyStep = 10;
-static NSUInteger height = 30;
-static NSUInteger width = 20;
+static NSUInteger height = 15;
+static NSUInteger width = 10;
 static CGFloat shotDuration = 0.03f;
+static CGFloat shotEnemyDuration = 0.04f;
 
 #define screenHeight  ([[UIScreen mainScreen] bounds].size.height)
 
@@ -44,7 +45,7 @@ static CGFloat shotDuration = 0.03f;
         
         self.image = [UIImage imageNamed:@"seaRocket"];
         
-        [self createRocketWithDownDirectionAndDuration:shotDuration];
+        [self createRocketWithDownDirectionAndDuration:shotEnemyDuration];
     }
     return self;
 }

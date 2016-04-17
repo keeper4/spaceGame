@@ -18,22 +18,9 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    CGRect screen = [[UIScreen mainScreen] bounds];
-    
-    UIImageView *pauseViewBackground = [[UIImageView alloc] initWithFrame:screen];
-    
-    pauseViewBackground.image = [UIImage imageNamed:@"background"];
-    
-    pauseViewBackground.layer.zPosition = -1;
-    
-    [self.view addSubview:pauseViewBackground];
-    
-    
-    
+
+
 }
-
-
 
 - (IBAction)actionResumeButton:(UIButton *)sender {
     
