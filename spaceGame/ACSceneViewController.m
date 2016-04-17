@@ -117,7 +117,7 @@ static CGFloat shotDuration = 0.06f;
                 
             } else if (self.enemyShip.lifeQuantity == 0) {
                 
-                self.scoreLabel.text = [NSString stringWithFormat:@" Score: %ld ", self.score += 1];
+                self.scoreLabel.text = [NSString stringWithFormat:@" Score: %u ", self.score += 1];
                 
                 [self removeSpaceObjectAnimated:self.enemyShip];
             }

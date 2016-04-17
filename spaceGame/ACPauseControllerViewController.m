@@ -7,6 +7,8 @@
 //
 
 #import "ACPauseControllerViewController.h"
+#import "ACStartViewController.h"
+#import "AppDelegate.h"
 
 @interface ACPauseControllerViewController ()
 
@@ -40,17 +42,11 @@
 }
 
 - (IBAction)actionRestartButton:(UIButton *)sender {
-    
-    UIViewController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ACSceneViewController"];
-    
-    [vc dismissViewControllerAnimated:YES completion:nil];
-    
-    
 
-    
     
 }
 - (IBAction)actionMainButton:(UIButton *)sender {
-    
+
+    [self.view.window.rootViewController dismissViewControllerAnimated:NO completion:nil];
 }
 @end
