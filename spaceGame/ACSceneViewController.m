@@ -103,35 +103,17 @@ AVAudioPlayer *audioPlayer2;
     
     ACRocket *rocket;
     
-    if ([view isKindOfClass:[ACSpaceShip class]]) {
+    if ([view isKindOfClass:[ACSpaceShip class]] && self.spaceShip.lifeQuantity > 0) {
         
         rocket = [[ACRocket alloc] initWithShipView:view];
         
-    } else if ([view isKindOfClass:[ACEnemy class]]) {
+    } else if ([view isKindOfClass:[ACEnemy class]] && self.spaceShip.lifeQuantity > 0) {
         
         rocket = [[ACRocket alloc] initWithEnemyView:view];
     }
     
     [self.view addSubview:rocket];
     
-}
-
-- (void)animationWithDelta:(CGFloat)delta oldX:(CGFloat)oldX newX:(CGFloat)newX gestureRecognizer:(UILongPressGestureRecognizer *)gestureRecognizer
-{
-    [UIView animateWithDuration:0.2f
-                          delay:0
-                        options:UIViewAnimationOptionCurveLinear
-                     animations:^{
-                         self.spaceShip.center = CGPointMake(newX, CGRectGetMaxY(self.view.frame)-self.spaceShip.frame.size.width/2);
-                     }
-                     completion:^(BOOL finished) {
-                         
-                         if(gestureRecognizer.state != UIGestureRecognizerStateEnded) {
-                             
-                             [self handleLongPress:gestureRecognizer];
-                             
-                         }
-                     }];
 }
 
 #pragma mark - rocketCurrentPositionNotification
@@ -179,10 +161,8 @@ AVAudioPlayer *audioPlayer2;
                 
             } else if (self.spaceShip.lifeQuantity == 0) {
                 
-                // self.score = 0;
-                // self.scoreLabel.text = @" Score: 0 " ;
+                [self removeSpaceObjectAnimated:self.spaceShip];
                 
-                // [self removeSpaceObjectAnimated:self.spaceShip];
                 [[ACStartViewController audioPlayer] stop];
                 
                 NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"dead2" ofType:@"mp3"]];
@@ -197,10 +177,8 @@ AVAudioPlayer *audioPlayer2;
                 
                 vc.score = self.score;
                 
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                    [self presentViewController:vc animated:YES completion:nil];
-                });
-
+                [self presentViewController:vc animated:YES completion:nil];
+                
             }
         }
     }
@@ -271,10 +249,9 @@ AVAudioPlayer *audioPlayer2;
                               
                               [ship removeFromSuperview];
                               
-                              if ([ship isKindOfClass:[ACSpaceShip class]]) {
+                              if ([ship isKindOfClass:[ACSpaceShip class]] && self.spaceShip.lifeQuantity == 0) {
                                   
-                                  self.spaceShip = [[ACSpaceShip alloc] init];
-                                  [self.view addSubview:self.spaceShip];
+                                  self.spaceShip = nil;
                                   
                                   [self.healthCollection reloadData];
                                   
@@ -380,8 +357,8 @@ AVAudioPlayer *audioPlayer2;
 
 #pragma mark - Touch
 
--(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
-{
+-(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer {
+    
     CGFloat delta = 30.f;
     CGFloat oldX = CGRectGetMidX(self.spaceShip.frame);
     
@@ -404,6 +381,24 @@ AVAudioPlayer *audioPlayer2;
             [self animationWithDelta:delta oldX:oldX newX:newX gestureRecognizer:gestureRecognizer];
         }
     }
+}
+
+- (void)animationWithDelta:(CGFloat)delta oldX:(CGFloat)oldX newX:(CGFloat)newX gestureRecognizer:(UILongPressGestureRecognizer *)gestureRecognizer {
+    
+    [UIView animateWithDuration:0.2f
+                          delay:0
+                        options:UIViewAnimationOptionCurveLinear
+                     animations:^{
+                         self.spaceShip.center = CGPointMake(newX, CGRectGetMaxY(self.view.frame)-self.spaceShip.frame.size.width/2);
+                     }
+                     completion:^(BOOL finished) {
+                         
+                         if(gestureRecognizer.state != UIGestureRecognizerStateEnded) {
+                             
+                             [self handleLongPress:gestureRecognizer];
+                             
+                         }
+                     }];
 }
 
 #pragma mark - Memory
