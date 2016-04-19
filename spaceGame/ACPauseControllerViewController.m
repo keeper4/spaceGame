@@ -29,11 +29,20 @@
 }
 
 - (IBAction)actionRestartButton:(UIButton *)sender {
-
+    
+    UIViewController *monitorMenuViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ACSceneViewController"];
+    
+    [self presentViewController:monitorMenuViewController animated:NO completion:nil];
     
 }
 - (IBAction)actionMainButton:(UIButton *)sender {
 
     [self.view.window.rootViewController dismissViewControllerAnimated:NO completion:nil];
+}
+
+
+- (BOOL)prefersStatusBarHidden {
+    
+    return YES;
 }
 @end

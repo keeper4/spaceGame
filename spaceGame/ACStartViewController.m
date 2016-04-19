@@ -7,36 +7,37 @@
 //
 
 #import "ACStartViewController.h"
-#import <AVFoundation/AVFoundation.h>
 
 @implementation ACStartViewController
 
-    AVAudioPlayer *audioPlayer;
++ (AVAudioPlayer *)audioPlayer {
+    
+    static AVAudioPlayer *audioPlayer = nil;
+    static dispatch_once_t oncePredicate;
+    dispatch_once(&oncePredicate, ^{
+        
+        NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"SuperBonk_TwilightSpace" ofType:@"mp3"]];
+        audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+        audioPlayer.volume = 1.0;
+    });
+    
+    return audioPlayer;
+}
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-        
+    
     [self checkStateSwitchSound];
     
-    
-    [self createPlayer];
-    
+    [self startPlayer];
 }
 
 #pragma mark - privateMethod
 
-- (void)createPlayer {
-    
-    
-    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"SuperBonk_TwilightSpace" ofType:@"mp3"]];
-    
-    
-    audioPlayer = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
-    
-    audioPlayer.volume = 1.0;
-    
+- (void)startPlayer {
+
     if (self.musicSwitch.isOn) {
-        [audioPlayer play];
+        [[ACStartViewController audioPlayer] play];
     }
 }
 
@@ -57,13 +58,13 @@
     
     if (sender.isOn) {
         
-        [audioPlayer play];
+      [[ACStartViewController audioPlayer] play];
         
         [[NSUserDefaults standardUserDefaults]setObject:@"on" forKey:@"switch"];
         [[NSUserDefaults standardUserDefaults]synchronize];
         
     } else {
-        [audioPlayer pause];
+     [[ACStartViewController audioPlayer] pause];
         
         [[NSUserDefaults standardUserDefaults]setObject:@"off" forKey:@"switch"];
         [[NSUserDefaults standardUserDefaults]synchronize];

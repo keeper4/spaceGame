@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE0B18A91CC61FB600B07E98 /* dead2.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DE0B18A71CC61FB600B07E98 /* dead2.mp3 */; };
+		DE0B18AA1CC61FB600B07E98 /* shot1.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DE0B18A81CC61FB600B07E98 /* shot1.mp3 */; };
+		DE0B18AE1CC6306100B07E98 /* gameOver3.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DE0B18AC1CC6306100B07E98 /* gameOver3.mp3 */; };
 		DE2B3B221C9DD27900EE1D36 /* ACRocket.m in Sources */ = {isa = PBXBuildFile; fileRef = DE2B3B211C9DD27900EE1D36 /* ACRocket.m */; };
 		DE2C18381C9F1F90002B9427 /* ACEnemy.m in Sources */ = {isa = PBXBuildFile; fileRef = DE2C18371C9F1F90002B9427 /* ACEnemy.m */; };
 		DE2C183B1C9F3278002B9427 /* ACSpaceObject.m in Sources */ = {isa = PBXBuildFile; fileRef = DE2C183A1C9F3278002B9427 /* ACSpaceObject.m */; };
@@ -25,6 +28,9 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DE0B18A71CC61FB600B07E98 /* dead2.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = dead2.mp3; sourceTree = "<group>"; };
+		DE0B18A81CC61FB600B07E98 /* shot1.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = shot1.mp3; sourceTree = "<group>"; };
+		DE0B18AC1CC6306100B07E98 /* gameOver3.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = gameOver3.mp3; sourceTree = "<group>"; };
 		DE2B3B201C9DD27900EE1D36 /* ACRocket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACRocket.h; sourceTree = "<group>"; };
 		DE2B3B211C9DD27900EE1D36 /* ACRocket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACRocket.m; sourceTree = "<group>"; };
 		DE2C18361C9F1F90002B9427 /* ACEnemy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACEnemy.h; sourceTree = "<group>"; };
@@ -140,7 +146,10 @@
 		DE80AE7C1CC3D1F700E8DE73 /* Sound */ = {
 			isa = PBXGroup;
 			children = (
+				DE0B18A71CC61FB600B07E98 /* dead2.mp3 */,
+				DE0B18A81CC61FB600B07E98 /* shot1.mp3 */,
 				DE80AE7A1CC3D1C700E8DE73 /* SuperBonk_TwilightSpace.mp3 */,
+				DE0B18AC1CC6306100B07E98 /* gameOver3.mp3 */,
 			);
 			name = Sound;
 			path = ..;
@@ -205,7 +214,10 @@
 			files = (
 				DE70D9121C99DD690087BB5C /* LaunchScreen.storyboard in Resources */,
 				DE80AE7B1CC3D1C700E8DE73 /* SuperBonk_TwilightSpace.mp3 in Resources */,
+				DE0B18A91CC61FB600B07E98 /* dead2.mp3 in Resources */,
 				DE70D90F1C99DD690087BB5C /* Assets.xcassets in Resources */,
+				DE0B18AE1CC6306100B07E98 /* gameOver3.mp3 in Resources */,
+				DE0B18AA1CC61FB600B07E98 /* shot1.mp3 in Resources */,
 				DE70D90D1C99DD690087BB5C /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

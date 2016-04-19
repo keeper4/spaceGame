@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <AVFoundation/AVFoundation.h>
 
 @interface ACStartViewController : UIViewController
 
@@ -15,4 +16,5 @@
 - (IBAction)actionMusicSwitch:(UISwitch *)sender;
 - (IBAction)actionExitButton:(UIButton *)sender;
 
++ (AVAudioPlayer *)audioPlayer;
 @end

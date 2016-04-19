@@ -11,6 +11,8 @@
 #import "ACEnemy.h"
 #import "ACPauseControllerViewController.h"
 #import "ACGameOverController.h"
+#import <AVFoundation/AVFoundation.h>
+#import "ACStartViewController.h"
 
 @interface ACSceneViewController () <UICollectionViewDataSource, UICollectionViewDelegate, UIGestureRecognizerDelegate>
 
@@ -26,7 +28,7 @@
 @implementation ACSceneViewController
 
 static CGFloat animationDuration = 0.3f;
-
+AVAudioPlayer *audioPlayer2;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -72,7 +74,8 @@ static CGFloat animationDuration = 0.3f;
                                                                                        action:@selector(handleLongPress:)];
     lpgr.delegate = self;
     lpgr.delaysTouchesBegan = YES;
-    lpgr.minimumPressDuration = 0.2f;
+    lpgr.allowableMovement = 20;
+    lpgr.minimumPressDuration = 0.1f;
     [self.view addGestureRecognizer:lpgr];
     
 }
@@ -122,7 +125,12 @@ static CGFloat animationDuration = 0.3f;
                          self.spaceShip.center = CGPointMake(newX, CGRectGetMaxY(self.view.frame)-self.spaceShip.frame.size.width/2);
                      }
                      completion:^(BOOL finished) {
-                         [self handleLongPress:gestureRecognizer];
+                         
+                         if(gestureRecognizer.state != UIGestureRecognizerStateEnded) {
+                             
+                             [self handleLongPress:gestureRecognizer];
+                             
+                         }
                      }];
 }
 
@@ -171,25 +179,31 @@ static CGFloat animationDuration = 0.3f;
                 
             } else if (self.spaceShip.lifeQuantity == 0) {
                 
-                self.score = 0;
-                self.scoreLabel.text = @" Score: 0 " ;
+                // self.score = 0;
+                // self.scoreLabel.text = @" Score: 0 " ;
                 
-                [self removeSpaceObjectAnimated:self.spaceShip];
+                // [self removeSpaceObjectAnimated:self.spaceShip];
+                [[ACStartViewController audioPlayer] stop];
                 
-                /*    ACGameOverController* vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ACGameOverController"];
-                 
-                 
-                 vc.score = self.score;
-                 [self showViewController:vc sender:nil];
-                 
-                 [self presentViewController:vc animated:YES completion:nil];
-                 */
+                NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"dead2" ofType:@"mp3"]];
+                
+                audioPlayer2 = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+                
+                audioPlayer2.volume = 1.0;
+                
+                [audioPlayer2 play];
+                
+                ACGameOverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ACGameOverController"];
+                
+                vc.score = self.score;
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(3.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    [self presentViewController:vc animated:YES completion:nil];
+                });
+
             }
-            
         }
-        
     }
-    
 }
 
 #pragma mark - shipRocketFinishedFlyNotification
@@ -365,8 +379,6 @@ static CGFloat animationDuration = 0.3f;
 }
 
 #pragma mark - Touch
-
-
 
 -(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
 {
