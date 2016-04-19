@@ -47,6 +47,21 @@ AVAudioPlayer *audioPlayer2;
     [self.view addSubview:self.enemyShip];
     
     
+    
+    
+    UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc] initWithTarget:self
+                                                                                       action:@selector(handleLongPress:)];
+    lpgr.delegate = self;
+    lpgr.delaysTouchesBegan = YES;
+    lpgr.allowableMovement = 20;
+    lpgr.minimumPressDuration = 0.1f;
+    [self.view addGestureRecognizer:lpgr];
+    
+}
+
+- (void)viewWillAppear:(BOOL)animated {
+    [super viewWillAppear:animated];
+    
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     
     [notificationCenter addObserver:self
@@ -68,20 +83,7 @@ AVAudioPlayer *audioPlayer2;
                            selector:@selector(enemyShipFinishedFlyAction)
                                name:enemyShipFinishedFlyNotification
                              object:nil];
-    
-    
-    UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc] initWithTarget:self
-                                                                                       action:@selector(handleLongPress:)];
-    lpgr.delegate = self;
-    lpgr.delaysTouchesBegan = YES;
-    lpgr.allowableMovement = 20;
-    lpgr.minimumPressDuration = 0.1f;
-    [self.view addGestureRecognizer:lpgr];
-    
-}
 
-- (void)viewWillAppear:(BOOL)animated {
-    [super viewWillAppear:animated];
     
     [self setupBackgroundImageViews];
     
@@ -95,6 +97,11 @@ AVAudioPlayer *audioPlayer2;
     [self makeShootFromView:self.spaceShip];
     
     [self makeShootFromView:self.enemyShip];
+}
+
+- (void)viewWillDisappear:(BOOL)animated {
+    
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
 }
 
 #pragma mark - Private Methods
@@ -405,7 +412,7 @@ AVAudioPlayer *audioPlayer2;
 
 - (void)dealloc {
     
-    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
 }
 
 #pragma mark - Actions
