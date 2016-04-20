@@ -20,6 +20,18 @@ AVAudioPlayer *audioPlayer;
 - (void)viewDidLoad {
     [super viewDidLoad];
 
+    NSInteger highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"HighScore"];
+    
+    if (highScore < self.score) {
+        
+        [[NSUserDefaults standardUserDefaults] setInteger:self.score forKey:@"HighScore"];
+    }
+    
+    self.mineBestScoreLabel.text = [NSString stringWithFormat:@"%ld", (long)highScore];
+    
+    
+    
+    
     self.scoreLable.text = [NSString stringWithFormat:@"%ld", (long)self.score];
     
     NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"gameOver3" ofType:@"mp3"]];
@@ -29,7 +41,6 @@ AVAudioPlayer *audioPlayer;
     audioPlayer.volume = 1.0;
     
     [audioPlayer play];
-    
 }
 
 
@@ -39,4 +50,14 @@ AVAudioPlayer *audioPlayer;
 }
 
 
+- (IBAction)actionTryAgainButton:(UIButton *)sender {
+    
+    UIViewController *monitorMenuViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ACSceneViewController"];
+    
+    [self presentViewController:monitorMenuViewController animated:NO completion:nil];
+}
+
+- (IBAction)actionExitButton:(UIButton *)sender {
+        exit(0);
+}
 @end

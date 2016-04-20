@@ -12,6 +12,7 @@ NSString * const enemyShipFinishedFlyNotification = @"enemyShipFinishedFlyNotifi
 
 @interface ACEnemy()
 
+@property (strong, nonatomic) NSMutableArray *arrayY;
 @end
 
 @implementation ACEnemy
@@ -30,6 +31,16 @@ static NSUInteger flyStep = 5;
     return self;
 }
 
+- (void)arrayEnemyX {
+    
+    self.arrayY = [NSMutableArray array];
+    
+    for (NSInteger i = 40; i <= 280; i+=30) {
+        NSNumber *anumber = [NSNumber numberWithInteger:i];
+        [self.arrayY addObject:anumber];
+    }
+}
+
 - (void) makeShip {
     
     CGFloat widthShip = 40;
@@ -37,7 +48,11 @@ static NSUInteger flyStep = 5;
     
     CGRect screen = [[UIScreen mainScreen] bounds];
     
-    self.frame = CGRectMake(CGRectGetMidX(screen) - widthShip/2,
+    [self arrayEnemyX];
+    
+    NSNumber *randX = [self.arrayY objectAtIndex:arc4random_uniform(9)];
+    
+    self.frame = CGRectMake([randX floatValue] - widthShip/2,
                             CGRectGetMinY(screen) + 20,
                             widthShip,
                             heigthShip);

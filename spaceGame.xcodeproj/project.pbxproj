@@ -25,6 +25,8 @@
 		DE80AE6D1CC3874500E8DE73 /* ACPauseControllerViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE80AE6C1CC3874500E8DE73 /* ACPauseControllerViewController.m */; };
 		DE80AE771CC3B59A00E8DE73 /* ACGameOverController.m in Sources */ = {isa = PBXBuildFile; fileRef = DE80AE761CC3B59A00E8DE73 /* ACGameOverController.m */; };
 		DE80AE7B1CC3D1C700E8DE73 /* SuperBonk_TwilightSpace.mp3 in Resources */ = {isa = PBXBuildFile; fileRef = DE80AE7A1CC3D1C700E8DE73 /* SuperBonk_TwilightSpace.mp3 */; };
+		DEE3608D1CC79E080067F67F /* ACMainUIButton.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE3608C1CC79E080067F67F /* ACMainUIButton.m */; };
+		DEE360901CC7B0450067F67F /* ACMainLabel.m in Sources */ = {isa = PBXBuildFile; fileRef = DEE3608F1CC7B0450067F67F /* ACMainLabel.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -57,6 +59,10 @@
 		DE80AE751CC3B59A00E8DE73 /* ACGameOverController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACGameOverController.h; sourceTree = "<group>"; };
 		DE80AE761CC3B59A00E8DE73 /* ACGameOverController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACGameOverController.m; sourceTree = "<group>"; };
 		DE80AE7A1CC3D1C700E8DE73 /* SuperBonk_TwilightSpace.mp3 */ = {isa = PBXFileReference; lastKnownFileType = audio.mp3; path = SuperBonk_TwilightSpace.mp3; sourceTree = "<group>"; };
+		DEE3608B1CC79E080067F67F /* ACMainUIButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACMainUIButton.h; sourceTree = "<group>"; };
+		DEE3608C1CC79E080067F67F /* ACMainUIButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACMainUIButton.m; sourceTree = "<group>"; };
+		DEE3608E1CC7B0450067F67F /* ACMainLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ACMainLabel.h; sourceTree = "<group>"; };
+		DEE3608F1CC7B0450067F67F /* ACMainLabel.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ACMainLabel.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +88,10 @@
 				DE2C18371C9F1F90002B9427 /* ACEnemy.m */,
 				DE2B3B201C9DD27900EE1D36 /* ACRocket.h */,
 				DE2B3B211C9DD27900EE1D36 /* ACRocket.m */,
+				DEE3608B1CC79E080067F67F /* ACMainUIButton.h */,
+				DEE3608C1CC79E080067F67F /* ACMainUIButton.m */,
+				DEE3608E1CC7B0450067F67F /* ACMainLabel.h */,
+				DEE3608F1CC7B0450067F67F /* ACMainLabel.m */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -234,9 +244,11 @@
 				DE80AE6D1CC3874500E8DE73 /* ACPauseControllerViewController.m in Sources */,
 				DE70D91B1C99DDD60087BB5C /* ACSpaceShip.m in Sources */,
 				DE70D90A1C99DD690087BB5C /* ACSceneViewController.m in Sources */,
+				DEE360901CC7B0450067F67F /* ACMainLabel.m in Sources */,
 				DE5A9BF11CB17F26004755F0 /* ACStartViewController.m in Sources */,
 				DE70D9071C99DD690087BB5C /* AppDelegate.m in Sources */,
 				DE2C18381C9F1F90002B9427 /* ACEnemy.m in Sources */,
+				DEE3608D1CC79E080067F67F /* ACMainUIButton.m in Sources */,
 				DE2C183B1C9F3278002B9427 /* ACSpaceObject.m in Sources */,
 				DE70D9041C99DD690087BB5C /* main.m in Sources */,
 			);

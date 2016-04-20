@@ -9,7 +9,6 @@
 #import "ACSceneViewController.h"
 #import "ACSpaceShip.h"
 #import "ACEnemy.h"
-#import "ACPauseControllerViewController.h"
 #import "ACGameOverController.h"
 #import <AVFoundation/AVFoundation.h>
 #import "ACStartViewController.h"
@@ -34,19 +33,14 @@ AVAudioPlayer *audioPlayer2;
     [super viewDidLoad];
     
     
-    //spaceShip Create
-    
     self.spaceShip = [[ACSpaceShip alloc] init];
     
     [self.view addSubview:self.spaceShip];
     
-    //enemyShip Create
     
     self.enemyShip = [[ACEnemy alloc] init];
     
     [self.view addSubview:self.enemyShip];
-    
-    
     
     
     UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc] initWithTarget:self

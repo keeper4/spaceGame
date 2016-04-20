@@ -14,5 +14,7 @@
 
 @property (weak, nonatomic) IBOutlet UILabel *scoreLable;
 @property (weak, nonatomic) IBOutlet UILabel *mineBestScoreLabel;
+- (IBAction)actionTryAgainButton:(UIButton *)sender;
 
+- (IBAction)actionExitButton:(UIButton *)sender;
 @end

@@ -8,7 +8,6 @@
 
 #import "ACPauseControllerViewController.h"
 #import "ACStartViewController.h"
-#import "AppDelegate.h"
 
 @interface ACPauseControllerViewController ()
 
@@ -29,6 +28,8 @@
 }
 
 - (IBAction)actionRestartButton:(UIButton *)sender {
+    
+  //  [[ACStartViewController audioPlayer]play];
     
     UIViewController *monitorMenuViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ACSceneViewController"];
     
