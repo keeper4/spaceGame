@@ -8,6 +8,7 @@
 
 #import "ACGameOverController.h"
 #import <AVFoundation/AVFoundation.h>
+#import "ACStartViewController.h"
 
 @interface ACGameOverController ()
 
@@ -49,10 +50,11 @@ AVAudioPlayer *audioPlayer;
     return YES;
 }
 
-
 - (IBAction)actionTryAgainButton:(UIButton *)sender {
     
     UIViewController *monitorMenuViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ACSceneViewController"];
+    
+    [[ACStartViewController audioPlayer] play];
     
     [self presentViewController:monitorMenuViewController animated:NO completion:nil];
 }
