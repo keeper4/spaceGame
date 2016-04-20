@@ -20,7 +20,7 @@ AVAudioPlayer *audioPlayer;
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-
+    
     NSInteger highScore = [[NSUserDefaults standardUserDefaults] integerForKey:@"HighScore"];
     
     if (highScore < self.score) {
@@ -54,12 +54,14 @@ AVAudioPlayer *audioPlayer;
     
     UIViewController *monitorMenuViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ACSceneViewController"];
     
-    [[ACStartViewController audioPlayer] play];
+    if ([ACStartViewController audioPlayer].playing) {
+        [ACStartViewController audioPlayer].volume = 1.0;
+    }
     
     [self presentViewController:monitorMenuViewController animated:NO completion:nil];
 }
 
 - (IBAction)actionExitButton:(UIButton *)sender {
-        exit(0);
+    exit(0);
 }
 @end

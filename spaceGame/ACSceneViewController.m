@@ -56,6 +56,12 @@ AVAudioPlayer *audioPlayer2;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
+    if (!self.enemyShip) {
+        self.enemyShip = [[ACEnemy alloc] init];
+        
+        [self.view addSubview:self.enemyShip];
+    }
+    
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     
     [notificationCenter addObserver:self
@@ -77,7 +83,7 @@ AVAudioPlayer *audioPlayer2;
                            selector:@selector(enemyShipFinishedFlyAction)
                                name:enemyShipFinishedFlyNotification
                              object:nil];
-
+    
     
     [self setupBackgroundImageViews];
     
@@ -87,7 +93,7 @@ AVAudioPlayer *audioPlayer2;
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-    
+
     [self makeShootFromView:self.spaceShip];
     
     [self makeShootFromView:self.enemyShip];
@@ -164,7 +170,10 @@ AVAudioPlayer *audioPlayer2;
                 
                 [self removeSpaceObjectAnimated:self.spaceShip];
                 
-                [[ACStartViewController audioPlayer] stop];
+                
+                if ([ACStartViewController audioPlayer].playing) {
+                    [ACStartViewController audioPlayer].volume = 0.0;
+                }
                 
                 NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"dead2" ofType:@"mp3"]];
                 
@@ -402,18 +411,14 @@ AVAudioPlayer *audioPlayer2;
                      }];
 }
 
-#pragma mark - Memory
-
-- (void)dealloc {
-    
-    
-}
-
 #pragma mark - Actions
 
 - (IBAction)actionPauseButton:(UIButton *)sender {
     
-    UIViewController *nav = [self.storyboard instantiateViewControllerWithIdentifier:@"ACPauseControllerViewController"];
+    UIViewController *nav =
+    [self.storyboard instantiateViewControllerWithIdentifier:@"ACPauseControllerViewController"];
+    
+    self.enemyShip =nil;
     
     [self presentViewController:nav animated:YES completion:nil];
     
