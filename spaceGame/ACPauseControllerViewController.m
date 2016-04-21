@@ -33,7 +33,9 @@
     
     UIViewController *monitorMenuViewController = [self.storyboard instantiateViewControllerWithIdentifier:@"ACSceneViewController"];
     
-    [self presentViewController:monitorMenuViewController animated:NO completion:nil];
+    [monitorMenuViewController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    
+    [self presentViewController:monitorMenuViewController animated:YES completion:nil];
     
 }
 - (IBAction)actionMainButton:(UIButton *)sender {

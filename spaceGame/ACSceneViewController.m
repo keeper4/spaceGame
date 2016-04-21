@@ -186,7 +186,7 @@ AVAudioPlayer *audioPlayer2;
                 ACGameOverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ACGameOverController"];
                 
                 vc.score = self.score;
-                
+                [vc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
                 [self presentViewController:vc animated:YES completion:nil];
                 
             }
@@ -418,8 +418,10 @@ AVAudioPlayer *audioPlayer2;
     UIViewController *nav =
     [self.storyboard instantiateViewControllerWithIdentifier:@"ACPauseControllerViewController"];
     
-    self.enemyShip =nil;
+    [nav setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     
+    self.enemyShip =nil;
+
     [self presentViewController:nav animated:YES completion:nil];
     
 }

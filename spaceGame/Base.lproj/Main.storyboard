@@ -33,7 +33,7 @@
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="BYZ-38-t0r" kind="show" identifier="showSceneViewSegue" id="PA9-IT-UQ0"/>
+                                    <segue destination="BYZ-38-t0r" kind="presentation" identifier="showSceneViewSegue" modalPresentationStyle="fullScreen" modalTransitionStyle="flipHorizontal" id="PA9-IT-UQ0"/>
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t1y-3R-IB2" customClass="ACMainUIButton">

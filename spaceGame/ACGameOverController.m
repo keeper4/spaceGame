@@ -58,7 +58,9 @@ AVAudioPlayer *audioPlayer;
         [ACStartViewController audioPlayer].volume = 1.0;
     }
     
-    [self presentViewController:monitorMenuViewController animated:NO completion:nil];
+    [monitorMenuViewController setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    
+    [self presentViewController:monitorMenuViewController animated:YES completion:nil];
 }
 
 - (IBAction)actionExitButton:(UIButton *)sender {
