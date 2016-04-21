@@ -377,14 +377,14 @@ AVAudioPlayer *audioPlayer2;
     if(gestureRecognizer.state == UIGestureRecognizerStateBegan) {
         
         if (pointTouch.x <= CGRectGetMidX(self.view.frame) &&
-            CGRectGetMinX(self.view.frame) <= CGRectGetMinX(self.spaceShip.frame)-delta) {
+            CGRectGetMinX(self.view.frame) <= CGRectGetMinX(self.spaceShip.frame)-delta && pointTouch.y > 60) {
             
             CGFloat newX = oldX-delta;
             
             [self animationWithDelta:delta oldX:oldX newX:newX gestureRecognizer:gestureRecognizer];
             
         } else if (pointTouch.x > CGRectGetMidX(self.view.frame) &&
-                   CGRectGetMaxX(self.view.frame) >= CGRectGetMaxX(self.spaceShip.frame)+delta) {
+                   CGRectGetMaxX(self.view.frame) >= CGRectGetMaxX(self.spaceShip.frame)+delta && pointTouch.y > 60) {
             
             CGFloat newX = oldX+delta;
             
