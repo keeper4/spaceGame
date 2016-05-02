@@ -20,9 +20,14 @@
 
 @property (strong, nonatomic) ACSpaceShip *spaceShip;
 @property (strong, nonatomic) NSMutableArray *enemiesArray;
+@property (strong, nonatomic) NSMutableArray *rocketsArray;
 
 @property (assign, nonatomic) NSUInteger totalScore;
 @property (strong, nonatomic) UILongPressGestureRecognizer *lpgr;
+@property (assign, nonatomic) BOOL isPause;
+@property (assign, nonatomic) CGFloat moveShipDuration;
+
+@property (strong, nonatomic) NSTimer *timer;
 
 @end
 
@@ -35,6 +40,7 @@ AVAudioPlayer *audioPlayer2;
     [super viewDidLoad];
     
     self.enemiesArray = [NSMutableArray array];
+    self.rocketsArray = [NSMutableArray array];
     
     self.spaceShip = [[ACSpaceShip alloc] init];
     
@@ -63,6 +69,11 @@ AVAudioPlayer *audioPlayer2;
                              object:nil];
     
     [notificationCenter addObserver:self
+                           selector:@selector(enemyRocketFinishedFlyAction)
+                               name:enemyRocketFinishedFlyNotification
+                             object:nil];
+    
+    [notificationCenter addObserver:self
                            selector:@selector(checkForRocketHits:)
                                name:rocketCurrentPositionNotification
                              object:nil];
@@ -71,11 +82,11 @@ AVAudioPlayer *audioPlayer2;
     
     [self setupScoreLabel:self.scoreLabel];
     
-    [NSTimer scheduledTimerWithTimeInterval:(arc4random_uniform(3000) + 1000) / 1000
-                                     target:self
-                                   selector:@selector(addEnemy)
-                                   userInfo:nil
-                                    repeats:YES];
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:(arc4random_uniform(3000) + 1000) / 1000
+                                                  target:self
+                                                selector:@selector(addEnemy)
+                                                userInfo:nil
+                                                 repeats:YES];
     
 }
 
@@ -84,11 +95,30 @@ AVAudioPlayer *audioPlayer2;
     
     [self makeShootFromView:self.spaceShip];
     
+    if (self.isPause) {
+        
+        self.isPause = NO;
+        
+        [self changePauseValueForSpaceObjectsWithValue:self.isPause];
+        
+        [self makeShootFromView:self.spaceShip];
+        
+    }
+    
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
+    [super viewWillDisappear:animated];
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
+}
+
+#pragma mark - Getter Methods
+
+- (CGFloat)moveShipDuration {
+    
+    return (arc4random_uniform(200) + 300) / 10000.f;
 }
 
 #pragma mark - Enemy Processing
@@ -101,6 +131,8 @@ AVAudioPlayer *audioPlayer2;
     
     [self.view addSubview:enemy];
     
+    [enemy moveShipWithDuration:self.moveShipDuration];
+    
     [self makeShootFromView:enemy];
     
 }
@@ -108,8 +140,9 @@ AVAudioPlayer *audioPlayer2;
 - (void)removeEnemy:(UIView *)enemy {
     
     [self.enemiesArray removeObject:enemy];
-    enemy = nil;
     [enemy removeFromSuperview];
+    enemy = nil;
+    
 }
 
 #pragma mark - Private Methods
@@ -125,7 +158,16 @@ AVAudioPlayer *audioPlayer2;
     } else if ([view isKindOfClass:[ACEnemy class]] && self.spaceShip.lifeQuantity > 0) {
         
         rocket = [[ACRocket alloc] initWithEnemyView:view];
+        
+    } else {
+        
+        NSLog(@"Wrong view Type or lifeQuantity == 0");
+        
+        return;
     }
+    
+    
+    [self.rocketsArray addObject:rocket];
     
     [self.view addSubview:rocket];
     
@@ -144,8 +186,7 @@ AVAudioPlayer *audioPlayer2;
             if (CGRectIntersectsRect(enemyShip.frame, rocket.frame) && rocket.owner == ACRocketOwnerSpaceShip) {
                 
                 rocket.isHit = YES;
-                [rocket removeFromSuperview];
-                rocket = nil;
+                [self removeRocket:rocket];
                 
                 enemyShip.lifeQuantity -= 1;
                 
@@ -170,8 +211,7 @@ AVAudioPlayer *audioPlayer2;
         if (CGRectIntersectsRect(self.spaceShip.frame, rocket.frame) && rocket.owner == ACRocketOwnerEnemy) {
             
             rocket.isHit = YES;
-            [rocket removeFromSuperview];
-            rocket = nil;
+            [self removeRocket:rocket];
             
             self.spaceShip.lifeQuantity -= 1;
             
@@ -196,9 +236,36 @@ AVAudioPlayer *audioPlayer2;
     }
 }
 
+#pragma mark - shipRocketFinishedFlyNotification
+
+- (void)shipRocketFinishedFlyAction {
+    
+    [self makeShootFromView:self.spaceShip];
+}
+
+#pragma mark - enemyRocketFinishedFlyNotification
+
+- (void)enemyRocketFinishedFlyAction {
+    
+    
+}
+
 #pragma mark - Help Methods
 
+- (void)removeRocket:(UIView *)rocket {
+    
+    [rocket removeFromSuperview];
+    [self.rocketsArray removeObject:rocket];
+    rocket = nil;
+    
+}
+
 - (void)showGameOverController {
+    
+    self.isPause = YES;
+    
+    [self changePauseValueForSpaceObjectsWithValue:self.isPause];
+    
     
     NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"dead2" ofType:@"mp3"]];
     
@@ -218,11 +285,32 @@ AVAudioPlayer *audioPlayer2;
     
 }
 
-#pragma mark - shipRocketFinishedFlyNotification
-
-- (void)shipRocketFinishedFlyAction {
+- (void)changePauseValueForSpaceObjectsWithValue:(BOOL)isPaused {
     
-    [self makeShootFromView:self.spaceShip];
+    if (isPaused) {
+        
+        [self.timer invalidate];
+        
+    } else {
+        
+        self.timer = [NSTimer scheduledTimerWithTimeInterval:(arc4random_uniform(3000) + 1000) / 1000
+                                                      target:self
+                                                    selector:@selector(addEnemy)
+                                                    userInfo:nil
+                                                     repeats:YES];
+    }
+    
+    for (ACRocket *rocket in self.rocketsArray) {
+        
+        rocket.isPaused = isPaused;
+    }
+    
+    for (ACEnemy *enemyShip in self.enemiesArray) {
+        
+        enemyShip.isPaused = isPaused;
+        [enemyShip moveShipWithDuration:self.moveShipDuration];
+    }
+    
 }
 
 #pragma mark - Animations
@@ -418,6 +506,10 @@ AVAudioPlayer *audioPlayer2;
 #pragma mark - Actions
 
 - (IBAction)actionPauseButton:(UIButton *)sender {
+    
+    self.isPause = YES;
+    
+    [self changePauseValueForSpaceObjectsWithValue:self.isPause];
     
     UIViewController *nav =
     [self.storyboard instantiateViewControllerWithIdentifier:@"ACPauseControllerViewController"];

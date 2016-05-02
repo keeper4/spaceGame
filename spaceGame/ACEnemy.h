@@ -13,4 +13,6 @@ extern NSString * const enemyShipFinishedFlyNotification;
 
 @interface ACEnemy : ACSpaceObject
 
+- (void)moveShipWithDuration:(NSTimeInterval)duration;
+
 @end

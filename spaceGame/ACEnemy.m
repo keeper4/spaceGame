@@ -18,8 +18,11 @@ NSString * const enemyShipFinishedFlyNotification = @"enemyShipFinishedFlyNotifi
 @implementation ACEnemy
 
 static NSUInteger flyStep = 5;
+static CGFloat widthShip = 40;
+static CGFloat heigthShip = 50;
 
-#define screenHeight  ([[UIScreen mainScreen] bounds].size.height)
+#define screenHeight    CGRectGetHeight([[UIScreen mainScreen] bounds])
+#define screenWidth     CGRectGetWidth([[UIScreen mainScreen] bounds])
 
 - (instancetype)init
 {
@@ -35,16 +38,15 @@ static NSUInteger flyStep = 5;
     
     self.arrayY = [NSMutableArray array];
     
-    for (NSInteger i = 40; i <= 280; i+=30) {
+    for (NSInteger i = widthShip; i <= screenWidth; i += 30) {
+        
         NSNumber *anumber = [NSNumber numberWithInteger:i];
+        
         [self.arrayY addObject:anumber];
     }
 }
 
 - (void) makeShip {
-    
-    CGFloat widthShip = 40;
-    CGFloat heigthShip = 50;
     
     CGRect screen = [[UIScreen mainScreen] bounds];
     
@@ -65,7 +67,6 @@ static NSUInteger flyStep = 5;
     
     self.lifeQuantity = 1;
     
-    [self moveShipWithDuration:0.04f];
 }
 
 - (void)moveShipWithDuration:(NSTimeInterval)duration {
@@ -81,7 +82,11 @@ static NSUInteger flyStep = 5;
                               
                               NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
                               
-                              if (!self.isHit && CGRectGetMinY(self.frame) < screenHeight) {
+                              if (self.isPaused) {
+                              
+                                  return;
+                              
+                              } else if (!self.isHit && CGRectGetMinY(self.frame) < screenHeight) {
                                   
                                   [self moveShipWithDuration:duration];
                                   

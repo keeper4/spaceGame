@@ -14,6 +14,7 @@ extern NSString * const enemyRocketFinishedFlyNotification;
 
 extern NSString * const rocketCurrentPositionNotification;
 
+
 typedef enum {
     ACRocketOwnerEnemy,
     ACRocketOwnerSpaceShip
@@ -24,10 +25,13 @@ typedef enum {
 @property (assign, nonatomic) CGFloat height;
 @property (assign, nonatomic) CGFloat width;
 @property (assign, nonatomic) BOOL isHit;
+@property (assign, nonatomic) BOOL isPaused;
 @property (assign, nonatomic) ACRocketOwner owner;
 
 
 - (instancetype)initWithShipView:(UIView *)shipView;
 - (instancetype)initWithEnemyView:(UIView *)enemyView;
+
+- (void)moveRocket;
 
 @end

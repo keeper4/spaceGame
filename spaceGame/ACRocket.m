@@ -21,7 +21,7 @@ static NSUInteger width = 10;
 static CGFloat shotDuration = 0.03f;
 static CGFloat shotEnemyDuration = 0.04f;
 
-#define screenHeight  [[UIScreen mainScreen] bounds].size.height
+#define screenHeight    CGRectGetHeight([[UIScreen mainScreen] bounds])
 
 
 - (instancetype)initWithShipView:(UIView *)shipView {
@@ -34,7 +34,7 @@ static CGFloat shotEnemyDuration = 0.04f;
         
         self.owner = ACRocketOwnerSpaceShip;
         
-        [self createRocketWithUpDirectionAndDuration:shotDuration];
+        [self moveRocket];
     }
     return self;
 }
@@ -49,12 +49,41 @@ static CGFloat shotEnemyDuration = 0.04f;
         
         self.owner = ACRocketOwnerEnemy;
         
-        [self createRocketWithDownDirectionAndDuration:shotEnemyDuration];
+        [self moveRocket];
     }
     return self;
 }
 
-- (void)createRocketWithDownDirectionAndDuration:(NSTimeInterval)duration {
+#pragma mark - Setter Methods
+
+- (void)setIsPaused:(BOOL)isPaused {
+    
+    _isPaused = isPaused;
+    
+    if (!isPaused) {
+        
+        [self moveRocket];
+    }
+}
+
+#pragma mark - Help Methods
+
+- (void)moveRocket {
+    
+    if (self.owner == ACRocketOwnerSpaceShip) {
+        
+        [self moveRocketWithUpDirectionAndDuration:shotDuration];
+        
+    } else {
+        
+        [self moveRocketWithDownDirectionAndDuration:shotEnemyDuration];
+        
+    }
+}
+
+#pragma mark - Private Methods
+
+- (void)moveRocketWithDownDirectionAndDuration:(NSTimeInterval)duration {
     
     [UIImageView animateWithDuration:duration
                                delay:0
@@ -67,18 +96,25 @@ static CGFloat shotEnemyDuration = 0.04f;
                               
                               NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
                               
-                              if (!self.isHit && CGRectGetMinY(self.frame) <= screenHeight) {
+                              if (self.isPaused) {
+                                  
+                                  return;
+                              
+                              } else if (!self.isHit && CGRectGetMinY(self.frame) <= screenHeight) {
                                   
                                   [center postNotificationName:rocketCurrentPositionNotification object:self];
                                   
-                                  [self createRocketWithDownDirectionAndDuration:duration];
+                                  [self moveRocketWithDownDirectionAndDuration:duration];
                                   
+                              } else {
+                                  
+                                  [center postNotificationName:enemyRocketFinishedFlyNotification object:nil];
                               }
                               
                           }];
 }
 
-- (void)createRocketWithUpDirectionAndDuration:(NSTimeInterval)duration {
+- (void)moveRocketWithUpDirectionAndDuration:(NSTimeInterval)duration {
     
     [UIImageView animateWithDuration:duration
                                delay:0
@@ -91,13 +127,17 @@ static CGFloat shotEnemyDuration = 0.04f;
                               
                               NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
                               
-                              if (!self.isHit && CGRectGetMaxY(self.frame) > 0) {
+                              if (self.isPaused) {
+                                  
+                                  return;
+                                  
+                              } else if (!self.isHit && CGRectGetMaxY(self.frame) > 0) {
                                   
                                   [center postNotificationName:rocketCurrentPositionNotification object:self];
                                   
-                                  [self createRocketWithUpDirectionAndDuration:duration];
+                                  [self moveRocketWithUpDirectionAndDuration:duration];
                                   
-                              } else  {
+                              } else {
                                   
                                   [center postNotificationName:shipRocketFinishedFlyNotification object:nil];
                               }
