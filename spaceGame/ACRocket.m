@@ -21,7 +21,7 @@ static NSUInteger width = 10;
 static CGFloat shotDuration = 0.03f;
 static CGFloat shotEnemyDuration = 0.04f;
 
-#define screenHeight  ([[UIScreen mainScreen] bounds].size.height)
+#define screenHeight  [[UIScreen mainScreen] bounds].size.height
 
 
 - (instancetype)initWithShipView:(UIView *)shipView {
@@ -31,6 +31,8 @@ static CGFloat shotEnemyDuration = 0.04f;
         self.frame = CGRectMake(CGRectGetMidX(shipView.frame) - width/2, CGRectGetMinY(shipView.frame) - height, width, height);
         
         self.image = [UIImage imageNamed:@"redRocket"];
+        
+        self.owner = ACRocketOwnerSpaceShip;
         
         [self createRocketWithUpDirectionAndDuration:shotDuration];
     }
@@ -44,6 +46,8 @@ static CGFloat shotEnemyDuration = 0.04f;
         self.frame = CGRectMake(CGRectGetMidX(enemyView.frame) - width/2, CGRectGetMaxY(enemyView.frame), width, height);
         
         self.image = [UIImage imageNamed:@"seaRocket"];
+        
+        self.owner = ACRocketOwnerEnemy;
         
         [self createRocketWithDownDirectionAndDuration:shotEnemyDuration];
     }
@@ -69,9 +73,6 @@ static CGFloat shotEnemyDuration = 0.04f;
                                   
                                   [self createRocketWithDownDirectionAndDuration:duration];
                                   
-                              } else {
-                                  
-                                  [center postNotificationName:enemyRocketFinishedFlyNotification object:nil];
                               }
                               
                           }];

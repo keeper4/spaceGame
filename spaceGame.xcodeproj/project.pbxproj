@@ -96,6 +96,14 @@
 			name = Models;
 			sourceTree = "<group>";
 		};
+		BA900F221CD7B04600505860 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				DE5A9BFC1CB18C51004755F0 /* AVFoundation.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 		DE1D912D1CB55DC700E70051 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -114,8 +122,8 @@
 		DE70D8F61C99DD690087BB5C = {
 			isa = PBXGroup;
 			children = (
-				DE5A9BFC1CB18C51004755F0 /* AVFoundation.framework */,
 				DE70D9011C99DD690087BB5C /* spaceGame */,
+				BA900F221CD7B04600505860 /* Frameworks */,
 				DE70D9001C99DD690087BB5C /* Products */,
 			);
 			sourceTree = "<group>";

@@ -18,10 +18,12 @@
 @property (weak, nonatomic) IBOutlet UILabel *scoreLabel;
 @property (weak, nonatomic) IBOutlet UICollectionView *healthCollection;
 
-@property (assign, nonatomic) NSUInteger score;
 @property (strong, nonatomic) ACSpaceShip *spaceShip;
-@property (strong, nonatomic) ACEnemy *enemyShip;
+@property (strong, nonatomic) NSMutableArray *enemiesArray;
+
+@property (assign, nonatomic) NSUInteger totalScore;
 @property (strong, nonatomic) UILongPressGestureRecognizer *lpgr;
+
 @end
 
 @implementation ACSceneViewController
@@ -32,15 +34,11 @@ AVAudioPlayer *audioPlayer2;
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.enemiesArray = [NSMutableArray array];
     
     self.spaceShip = [[ACSpaceShip alloc] init];
     
     [self.view addSubview:self.spaceShip];
-    
-    
-    self.enemyShip = [[ACEnemy alloc] init];
-    
-    [self.view addSubview:self.enemyShip];
     
     
     UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc] initWithTarget:self
@@ -56,11 +54,6 @@ AVAudioPlayer *audioPlayer2;
 - (void)viewWillAppear:(BOOL)animated {
     [super viewWillAppear:animated];
     
-    if (!self.enemyShip) {
-        self.enemyShip = [[ACEnemy alloc] init];
-        
-        [self.view addSubview:self.enemyShip];
-    }
     
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     
@@ -70,38 +63,53 @@ AVAudioPlayer *audioPlayer2;
                              object:nil];
     
     [notificationCenter addObserver:self
-                           selector:@selector(enemyRocketFinishedFlyAction)
-                               name:enemyRocketFinishedFlyNotification
-                             object:nil];
-    
-    [notificationCenter addObserver:self
                            selector:@selector(checkForRocketHits:)
                                name:rocketCurrentPositionNotification
                              object:nil];
-    
-    [notificationCenter addObserver:self
-                           selector:@selector(enemyShipFinishedFlyAction)
-                               name:enemyShipFinishedFlyNotification
-                             object:nil];
-    
     
     [self setupBackgroundImageViews];
     
     [self setupScoreLabel:self.scoreLabel];
     
+    [NSTimer scheduledTimerWithTimeInterval:(arc4random_uniform(3000) + 1000) / 1000
+                                     target:self
+                                   selector:@selector(addEnemy)
+                                   userInfo:nil
+                                    repeats:YES];
+    
 }
 
 - (void)viewDidAppear:(BOOL)animated {
     [super viewDidAppear:animated];
-
+    
     [self makeShootFromView:self.spaceShip];
     
-    [self makeShootFromView:self.enemyShip];
 }
 
 - (void)viewWillDisappear:(BOOL)animated {
     
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+}
+
+#pragma mark - Enemy Processing
+
+- (void)addEnemy {
+    
+    ACEnemy *enemy = [[ACEnemy alloc] init];
+    
+    [self.enemiesArray addObject:enemy];
+    
+    [self.view addSubview:enemy];
+    
+    [self makeShootFromView:enemy];
+    
+}
+
+- (void)removeEnemy:(UIView *)enemy {
+    
+    [self.enemiesArray removeObject:enemy];
+    enemy = nil;
+    [enemy removeFromSuperview];
 }
 
 #pragma mark - Private Methods
@@ -131,28 +139,35 @@ AVAudioPlayer *audioPlayer2;
         
         ACRocket *rocket = notification.object;
         
-        if (CGRectIntersectsRect(self.enemyShip.frame, rocket.frame)) {
+        for (ACEnemy *enemyShip in self.enemiesArray) {
             
-            rocket.isHit = YES;
-            [rocket removeFromSuperview];
-            rocket = nil;
-            
-            self.enemyShip.lifeQuantity -= 1;
-            
-            if (self.enemyShip.lifeQuantity > 0) {
+            if (CGRectIntersectsRect(enemyShip.frame, rocket.frame) && rocket.owner == ACRocketOwnerSpaceShip) {
                 
-                [self hitSpaceObjectAnimated:self.enemyShip];
+                rocket.isHit = YES;
+                [rocket removeFromSuperview];
+                rocket = nil;
                 
-            } else if (self.enemyShip.lifeQuantity == 0) {
+                enemyShip.lifeQuantity -= 1;
                 
-                self.enemyShip.isHit = YES;
+                if (enemyShip.lifeQuantity > 0) {
+                    
+                    [self hitSpaceObjectAnimated:enemyShip];
+                    
+                } else {
+                    
+                    enemyShip.isHit = YES;
+                    
+                    self.scoreLabel.text = [NSString stringWithFormat:@" Score: %lu ", (unsigned long)(self.totalScore += 1)];
+                    
+                    [self removeSpaceObjectAnimated:enemyShip];
+                }
                 
-                self.scoreLabel.text = [NSString stringWithFormat:@" Score: %u ", self.score += 1];
-                
-                [self removeSpaceObjectAnimated:self.enemyShip];
+                return;
             }
             
-        } else if (CGRectIntersectsRect(self.spaceShip.frame, rocket.frame)) {
+        }
+        
+        if (CGRectIntersectsRect(self.spaceShip.frame, rocket.frame) && rocket.owner == ACRocketOwnerEnemy) {
             
             rocket.isHit = YES;
             [rocket removeFromSuperview];
@@ -175,23 +190,32 @@ AVAudioPlayer *audioPlayer2;
                     [ACStartViewController audioPlayer].volume = 0.0;
                 }
                 
-                NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"dead2" ofType:@"mp3"]];
-                
-                audioPlayer2 = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
-                
-                audioPlayer2.volume = 1.0;
-                
-                [audioPlayer2 play];
-                
-                ACGameOverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ACGameOverController"];
-                
-                vc.score = self.score;
-                [vc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
-                [self presentViewController:vc animated:YES completion:nil];
-                
+                [self showGameOverController];
             }
         }
     }
+}
+
+#pragma mark - Help Methods
+
+- (void)showGameOverController {
+    
+    NSURL *url = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"dead2" ofType:@"mp3"]];
+    
+    audioPlayer2 = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
+    
+    audioPlayer2.volume = 1.0;
+    
+    [audioPlayer2 play];
+    
+    ACGameOverController *vc = [self.storyboard instantiateViewControllerWithIdentifier:@"ACGameOverController"];
+    
+    vc.score = self.totalScore;
+    
+    [vc setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
+    
+    [self presentViewController:vc animated:YES completion:nil];
+    
 }
 
 #pragma mark - shipRocketFinishedFlyNotification
@@ -199,26 +223,6 @@ AVAudioPlayer *audioPlayer2;
 - (void)shipRocketFinishedFlyAction {
     
     [self makeShootFromView:self.spaceShip];
-}
-
-#pragma mark - enemyRocketFinishedFlyNotification
-
-- (void)enemyRocketFinishedFlyAction {
-    
-    [self makeShootFromView:self.enemyShip];
-}
-
-#pragma mark - enemyShipFinishedFlyNotification
-
-- (void)enemyShipFinishedFlyAction {
-    
-    [self.enemyShip removeFromSuperview];
-    self.enemyShip = nil;
-    
-    self.enemyShip = [[ACEnemy alloc] init];
-    
-    [self.view addSubview:self.enemyShip];
-    
 }
 
 #pragma mark - Animations
@@ -259,7 +263,7 @@ AVAudioPlayer *audioPlayer2;
                               
                               [ship removeFromSuperview];
                               
-                              if ([ship isKindOfClass:[ACSpaceShip class]] && self.spaceShip.lifeQuantity == 0) {
+                              if ([ship isKindOfClass:[ACSpaceShip class]]) {
                                   
                                   self.spaceShip = nil;
                                   
@@ -267,8 +271,11 @@ AVAudioPlayer *audioPlayer2;
                                   
                               } else if ([ship isKindOfClass:[ACEnemy class]]) {
                                   
-                                  self.enemyShip = [[ACEnemy alloc] init];
-                                  [self.view addSubview:self.enemyShip];
+                                  [self removeEnemy:ship];
+                                  
+                              } else {
+                                  
+                                  NSLog(@"Wrong ship Type");
                               }
                               
                           }];
@@ -315,8 +322,6 @@ AVAudioPlayer *audioPlayer2;
     CGRect viewRect = self.view.frame;
     
     backgroundViewFirst.frame = viewRect;
-    backgroundViewFirst.layer.zPosition = -1;
-    
     
     UIImageView *backgroundViewSecond = [[UIImageView alloc] initWithImage:backgroundImage];
     
@@ -325,13 +330,12 @@ AVAudioPlayer *audioPlayer2;
                                             CGRectGetWidth(viewRect),
                                             CGRectGetHeight(viewRect));
     
-    backgroundViewSecond.layer.zPosition = -1;
-    
-    
     [self.view addSubview:backgroundViewFirst];
     
     [self.view addSubview:backgroundViewSecond];
     
+    [self.view sendSubviewToBack:backgroundViewSecond];
+    [self.view sendSubviewToBack:backgroundViewFirst];
     
     [self moveBackgroundWithFirstView:backgroundViewFirst secondView:backgroundViewSecond andDuration:10];
     
@@ -403,7 +407,7 @@ AVAudioPlayer *audioPlayer2;
                      }
                      completion:^(BOOL finished) {
                          
-                         if(gestureRecognizer.state != UIGestureRecognizerStateEnded) {
+                         if (gestureRecognizer.state != UIGestureRecognizerStateEnded) {
                              
                              [self handleLongPress:gestureRecognizer];
                              
@@ -420,8 +424,6 @@ AVAudioPlayer *audioPlayer2;
     
     [nav setModalTransitionStyle:UIModalTransitionStyleFlipHorizontal];
     
-    self.enemyShip =nil;
-
     [self presentViewController:nav animated:YES completion:nil];
     
 }
