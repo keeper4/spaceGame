@@ -80,8 +80,6 @@ static CGFloat heigthShip = 50;
                               
                           } completion:^(BOOL finished) {
                               
-                              NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-                              
                               if (self.isPaused) {
                               
                                   return;
@@ -92,13 +90,12 @@ static CGFloat heigthShip = 50;
                                   
                               } else if (!self.isHit && CGRectGetMinY(self.frame) >= screenHeight) {
                                   
-                                  [center postNotificationName:enemyShipFinishedFlyNotification object:nil];
+                                  [[NSNotificationCenter defaultCenter] postNotificationName:enemyShipFinishedFlyNotification object:nil];
                                   
                               }
                               
                           }];
     
 }
-
 
 @end

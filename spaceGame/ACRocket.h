@@ -9,9 +9,7 @@
 
 #import "UIKit/UIKit.h"
 
-extern NSString * const shipRocketFinishedFlyNotification;
-extern NSString * const enemyRocketFinishedFlyNotification;
-
+extern NSString * const rocketFinishedFlyNotification;
 extern NSString * const rocketCurrentPositionNotification;
 
 

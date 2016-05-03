@@ -26,8 +26,9 @@
 @property (strong, nonatomic) UILongPressGestureRecognizer *lpgr;
 @property (assign, nonatomic) BOOL isPause;
 @property (assign, nonatomic) CGFloat moveShipDuration;
-
-@property (strong, nonatomic) NSTimer *timer;
+@property (strong, nonatomic) NSTimer *addingEnemyTimer;
+@property (strong, nonatomic) NSTimer *shootingEnemyTimer;
+@property (strong, nonatomic) NSTimer *shootingShipTimer;
 
 @end
 
@@ -64,13 +65,8 @@ AVAudioPlayer *audioPlayer2;
     NSNotificationCenter *notificationCenter = [NSNotificationCenter defaultCenter];
     
     [notificationCenter addObserver:self
-                           selector:@selector(shipRocketFinishedFlyAction)
-                               name:shipRocketFinishedFlyNotification
-                             object:nil];
-    
-    [notificationCenter addObserver:self
-                           selector:@selector(enemyRocketFinishedFlyAction)
-                               name:enemyRocketFinishedFlyNotification
+                           selector:@selector(rocketFinishedFlyAction:)
+                               name:rocketFinishedFlyNotification
                              object:nil];
     
     [notificationCenter addObserver:self
@@ -82,11 +78,9 @@ AVAudioPlayer *audioPlayer2;
     
     [self setupScoreLabel:self.scoreLabel];
     
-    self.timer = [NSTimer scheduledTimerWithTimeInterval:(arc4random_uniform(3000) + 1000) / 1000
-                                                  target:self
-                                                selector:@selector(addEnemy)
-                                                userInfo:nil
-                                                 repeats:YES];
+    [self createAddingEnemiesTimer];
+    [self createShootingEnemiesTimer];
+    [self createShootingShipTimer];
     
 }
 
@@ -119,58 +113,6 @@ AVAudioPlayer *audioPlayer2;
 - (CGFloat)moveShipDuration {
     
     return (arc4random_uniform(200) + 300) / 10000.f;
-}
-
-#pragma mark - Enemy Processing
-
-- (void)addEnemy {
-    
-    ACEnemy *enemy = [[ACEnemy alloc] init];
-    
-    [self.enemiesArray addObject:enemy];
-    
-    [self.view addSubview:enemy];
-    
-    [enemy moveShipWithDuration:self.moveShipDuration];
-    
-    [self makeShootFromView:enemy];
-    
-}
-
-- (void)removeEnemy:(UIView *)enemy {
-    
-    [self.enemiesArray removeObject:enemy];
-    [enemy removeFromSuperview];
-    enemy = nil;
-    
-}
-
-#pragma mark - Private Methods
-
-- (void)makeShootFromView:(UIView *)view {
-    
-    ACRocket *rocket;
-    
-    if ([view isKindOfClass:[ACSpaceShip class]] && self.spaceShip.lifeQuantity > 0) {
-        
-        rocket = [[ACRocket alloc] initWithShipView:view];
-        
-    } else if ([view isKindOfClass:[ACEnemy class]] && self.spaceShip.lifeQuantity > 0) {
-        
-        rocket = [[ACRocket alloc] initWithEnemyView:view];
-        
-    } else {
-        
-        NSLog(@"Wrong view Type or lifeQuantity == 0");
-        
-        return;
-    }
-    
-    
-    [self.rocketsArray addObject:rocket];
-    
-    [self.view addSubview:rocket];
-    
 }
 
 #pragma mark - rocketCurrentPositionNotification
@@ -236,28 +178,72 @@ AVAudioPlayer *audioPlayer2;
     }
 }
 
-#pragma mark - shipRocketFinishedFlyNotification
+#pragma mark - rocketFinishedFlyNotification
 
-- (void)shipRocketFinishedFlyAction {
+- (void)rocketFinishedFlyAction:(NSNotification *)notification {
     
-    [self makeShootFromView:self.spaceShip];
-}
-
-#pragma mark - enemyRocketFinishedFlyNotification
-
-- (void)enemyRocketFinishedFlyAction {
+    ACRocket *rocket = notification.object;
     
+    if (rocket) {
+        
+        [self removeRocket:rocket];
+    }
     
 }
 
 #pragma mark - Help Methods
 
-- (void)removeRocket:(UIView *)rocket {
+- (void)makeShootFromView:(UIView *)view {
     
-    [rocket removeFromSuperview];
-    [self.rocketsArray removeObject:rocket];
-    rocket = nil;
+    ACRocket *rocket;
     
+    if ([view isKindOfClass:[ACSpaceShip class]] && self.spaceShip.lifeQuantity > 0) {
+        
+        rocket = [[ACRocket alloc] initWithShipView:view];
+        
+    } else if ([view isKindOfClass:[ACEnemy class]] && self.spaceShip.lifeQuantity > 0) {
+        
+        rocket = [[ACRocket alloc] initWithEnemyView:view];
+        
+    } else {
+        
+        NSLog(@"Wrong view Type or lifeQuantity == 0");
+        
+        return;
+    }
+    
+    
+    [self.rocketsArray addObject:rocket];
+    
+    [self.view addSubview:rocket];
+    
+}
+
+- (void)createShootingShipTimer {
+    
+    self.shootingShipTimer = [NSTimer scheduledTimerWithTimeInterval:1.5
+                                                              target:self
+                                                            selector:@selector(makeShootForSpaceShip)
+                                                            userInfo:nil
+                                                             repeats:YES];
+}
+
+- (void)createShootingEnemiesTimer {
+    
+    self.shootingEnemyTimer = [NSTimer scheduledTimerWithTimeInterval:2
+                                                               target:self
+                                                             selector:@selector(makeShootForEnemies)
+                                                             userInfo:nil
+                                                              repeats:YES];
+}
+
+- (void)createAddingEnemiesTimer {
+    
+    self.addingEnemyTimer = [NSTimer scheduledTimerWithTimeInterval:(arc4random_uniform(3000) + 1000) / 1000
+                                                             target:self
+                                                           selector:@selector(addEnemy)
+                                                           userInfo:nil
+                                                            repeats:YES];
 }
 
 - (void)showGameOverController {
@@ -271,7 +257,7 @@ AVAudioPlayer *audioPlayer2;
     
     audioPlayer2 = [[AVAudioPlayer alloc] initWithContentsOfURL:url error:nil];
     
-    audioPlayer2.volume = 1.0;
+    audioPlayer2.volume = 0.5f;
     
     [audioPlayer2 play];
     
@@ -289,27 +275,86 @@ AVAudioPlayer *audioPlayer2;
     
     if (isPaused) {
         
-        [self.timer invalidate];
+        [self.addingEnemyTimer invalidate];
+        self.addingEnemyTimer = nil;
+        
+        [self.shootingEnemyTimer invalidate];
+        self.shootingEnemyTimer = nil;
+        
+        [self.shootingShipTimer invalidate];
+        self.shootingShipTimer = nil;
         
     } else {
         
-        self.timer = [NSTimer scheduledTimerWithTimeInterval:(arc4random_uniform(3000) + 1000) / 1000
-                                                      target:self
-                                                    selector:@selector(addEnemy)
-                                                    userInfo:nil
-                                                     repeats:YES];
+        //        [self createAddingEnemiesTimer];
+        //        [self createShootingEnemiesTimer];
+        //        [self createShootingShipTimer];
+        
+        for (ACRocket *rocket in self.rocketsArray) {
+            
+            rocket.isPaused = isPaused;
+        }
+        
+        for (ACEnemy *enemyShip in self.enemiesArray) {
+            
+            enemyShip.isPaused = isPaused;
+            
+            [enemyShip moveShipWithDuration:self.moveShipDuration];
+        }
+        
     }
     
-    for (ACRocket *rocket in self.rocketsArray) {
+}
+
+#pragma mark - Rocket Processing
+
+- (void)removeRocket:(UIView *)rocket {
+    
+    [rocket removeFromSuperview];
+    
+    [self.rocketsArray removeObject:rocket];
+    
+    rocket = nil;
+    
+}
+
+#pragma mark - SpaceShip Processing
+
+- (void)makeShootForSpaceShip {
+    
+    [self makeShootFromView:self.spaceShip];
+}
+
+#pragma mark - Enemy Processing
+
+- (void)makeShootForEnemies {
+    
+    for (ACEnemy *enemy in self.enemiesArray) {
         
-        rocket.isPaused = isPaused;
+        [self makeShootFromView:enemy];
     }
     
-    for (ACEnemy *enemyShip in self.enemiesArray) {
-        
-        enemyShip.isPaused = isPaused;
-        [enemyShip moveShipWithDuration:self.moveShipDuration];
-    }
+}
+
+- (void)addEnemy {
+    
+    ACEnemy *enemy = [[ACEnemy alloc] init];
+    
+    [self.enemiesArray addObject:enemy];
+    
+    [self.view addSubview:enemy];
+    
+    [enemy moveShipWithDuration:self.moveShipDuration];
+    
+}
+
+- (void)removeEnemy:(UIView *)enemy {
+    
+    [self.enemiesArray removeObject:enemy];
+    
+    [enemy removeFromSuperview];
+    
+    enemy = nil;
     
 }
 

@@ -102,6 +102,7 @@
 				DE5A9BFC1CB18C51004755F0 /* AVFoundation.framework */,
 			);
 			name = Frameworks;
+			path = ..;
 			sourceTree = "<group>";
 		};
 		DE1D912D1CB55DC700E70051 /* Controllers */ = {
@@ -123,7 +124,6 @@
 			isa = PBXGroup;
 			children = (
 				DE70D9011C99DD690087BB5C /* spaceGame */,
-				BA900F221CD7B04600505860 /* Frameworks */,
 				DE70D9001C99DD690087BB5C /* Products */,
 			);
 			sourceTree = "<group>";
@@ -149,6 +149,7 @@
 				DE70D9101C99DD690087BB5C /* LaunchScreen.storyboard */,
 				DE70D9131C99DD690087BB5C /* Info.plist */,
 				DE70D9021C99DD690087BB5C /* Supporting Files */,
+				BA900F221CD7B04600505860 /* Frameworks */,
 			);
 			path = spaceGame;
 			sourceTree = "<group>";

@@ -8,10 +8,10 @@
 
 #import "ACRocket.h"
 
-NSString * const shipRocketFinishedFlyNotification = @"shipRocketFinishedFlyNotification";
-NSString * const enemyRocketFinishedFlyNotification = @"enemyRocketFinishedFlyNotification";
 
+NSString * const rocketFinishedFlyNotification = @"rocketFinishedFlyNotification";
 NSString * const rocketCurrentPositionNotification = @"rocketCurrentPositionNotification";
+
 
 @implementation ACRocket
 
@@ -35,6 +35,7 @@ static CGFloat shotEnemyDuration = 0.04f;
         self.owner = ACRocketOwnerSpaceShip;
         
         [self moveRocket];
+        
     }
     return self;
 }
@@ -50,6 +51,7 @@ static CGFloat shotEnemyDuration = 0.04f;
         self.owner = ACRocketOwnerEnemy;
         
         [self moveRocket];
+        
     }
     return self;
 }
@@ -64,6 +66,7 @@ static CGFloat shotEnemyDuration = 0.04f;
         
         [self moveRocket];
     }
+    
 }
 
 #pragma mark - Help Methods
@@ -72,49 +75,32 @@ static CGFloat shotEnemyDuration = 0.04f;
     
     if (self.owner == ACRocketOwnerSpaceShip) {
         
-        [self moveRocketWithUpDirectionAndDuration:shotDuration];
+        [self moveRocketUpWithDuration:shotDuration];
         
-    } else {
+    } else if (self.owner == ACRocketOwnerEnemy) {
         
-        [self moveRocketWithDownDirectionAndDuration:shotEnemyDuration];
+        [self moveRocketDownWithDuration:shotEnemyDuration];
         
     }
 }
 
-#pragma mark - Private Methods
-
-- (void)moveRocketWithDownDirectionAndDuration:(NSTimeInterval)duration {
+- (void)sendRocketFinishedFlyNotification {
     
-    [UIImageView animateWithDuration:duration
-                               delay:0
-                             options:UIViewAnimationOptionCurveLinear
-                          animations:^{
-                              
-                              self.center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + flyStep);
-                              
-                          } completion:^(BOOL finished) {
-                              
-                              NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-                              
-                              if (self.isPaused) {
-                                  
-                                  return;
-                              
-                              } else if (!self.isHit && CGRectGetMinY(self.frame) <= screenHeight) {
-                                  
-                                  [center postNotificationName:rocketCurrentPositionNotification object:self];
-                                  
-                                  [self moveRocketWithDownDirectionAndDuration:duration];
-                                  
-                              } else {
-                                  
-                                  [center postNotificationName:enemyRocketFinishedFlyNotification object:nil];
-                              }
-                              
-                          }];
+    [[NSNotificationCenter defaultCenter] postNotificationName:rocketFinishedFlyNotification
+                                                        object:self];
+    
 }
 
-- (void)moveRocketWithUpDirectionAndDuration:(NSTimeInterval)duration {
+- (void)sendRocketCurrentPositionNotification {
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:rocketCurrentPositionNotification
+                                                        object:self];
+    
+}
+
+#pragma mark - Private Methods
+
+- (void)moveRocketUpWithDuration:(NSTimeInterval)duration {
     
     [UIImageView animateWithDuration:duration
                                delay:0
@@ -125,21 +111,48 @@ static CGFloat shotEnemyDuration = 0.04f;
                               
                           } completion:^(BOOL finished) {
                               
-                              NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-                              
                               if (self.isPaused) {
                                   
                                   return;
                                   
                               } else if (!self.isHit && CGRectGetMaxY(self.frame) > 0) {
                                   
-                                  [center postNotificationName:rocketCurrentPositionNotification object:self];
+                                  [self sendRocketCurrentPositionNotification];
                                   
-                                  [self moveRocketWithUpDirectionAndDuration:duration];
+                                  [self moveRocketUpWithDuration:duration];
                                   
                               } else {
                                   
-                                  [center postNotificationName:shipRocketFinishedFlyNotification object:nil];
+                                  [self sendRocketFinishedFlyNotification];
+                              }
+                              
+                          }];
+}
+
+- (void)moveRocketDownWithDuration:(NSTimeInterval)duration {
+    
+    [UIImageView animateWithDuration:duration
+                               delay:0
+                             options:UIViewAnimationOptionCurveLinear
+                          animations:^{
+                              
+                              self.center = CGPointMake(CGRectGetMidX(self.frame), CGRectGetMidY(self.frame) + flyStep);
+                              
+                          } completion:^(BOOL finished) {
+                              
+                              if (self.isPaused) {
+                                  
+                                  return;
+                                  
+                              } else if (!self.isHit && CGRectGetMinY(self.frame) <= screenHeight) {
+                                  
+                                  [self sendRocketCurrentPositionNotification];
+                                  
+                                  [self moveRocketDownWithDuration:duration];
+                                  
+                              } else {
+                                  
+                                  [self sendRocketFinishedFlyNotification];
                               }
                               
                           }];
